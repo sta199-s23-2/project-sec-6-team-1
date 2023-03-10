@@ -21,23 +21,23 @@ library(tidyverse)
 -   It was originally collected in 2018 and is collected by reports of each state
     for covered outpatient drugs that are paid for by state Medicaid agencies since the         start of the Medicaid Drug Rebate Program. 
     
--   Write a brief description of the observations.
+-   I can see that there are a wide range of states, if not all of the states listed for the usage of a large sum of drugs, however i will only be focusing on Prozac which is a commonly used anti-depressant drug. 
 
 ## Research question
 
 -   What is the utilization of Prozac like in various states for outpatients that have medicaid in 2013 and why was the utilization so high or low, what factors impacted the utilization rates?
+
 -   The research topic has a lot to do with trying to tie the rate of prozac usage to depression levels of medicaid users in 2013. This then allows us to view the outsidde factors that might have been impacting depression levels in 2013. If prozac suppression usage is high, then in the year 2013 depression levels were high as well especially in black and brown communities because they are the majority of medicaid users.  
 
 -   There are both categorical and quantitative variables, the categorical consist of the type of drug, suppression usage(true or false), and states. The quantitative is package sizes, year and quarters. 
 
 ## Literature
 
--   Find one published credible article on the topic you are interested in researching.
+-   https://www.ncbi.nlm.nih.gov/books/NBK459223/ 
 
--   Provide a one paragraph summary about the article.
+-   This article goes into the depth the impact of Prozac in various situations as well as why Prozac is used and for what kinds of patients. It outlines the FDA approved portions of the drug and the parts that are left to therapist and mental health specialist. Furthermore, it gives details of the adverse effects and symptoms of the drug. What this article does more than any others is gives advice for enhancing healthcare team outcomes and places preganant women and children at the forefront because children as young as 8 can use Prozac.
 
--   In 1-2 sentences, explain how your research question builds on / is different than the article you have cited.
-
+-   My research question builds on and is different from the article because its focus on the usage of prozac in different states in a particular year and allows space to dive into the political and social sphere of that specific year. Rather the article is more generalized and not specific to state usage numbers, medicaid and one particular year. 
 ## Glimpse of data
 
 ```{r}

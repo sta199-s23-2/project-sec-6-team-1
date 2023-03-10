@@ -171,21 +171,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#introduction-and-data" id="toc-introduction-and-data" class="nav-link" data-scroll-target="#introduction-and-data">Introduction and data</a></li>
   <li><a href="#research-question" id="toc-research-question" class="nav-link" data-scroll-target="#research-question">Research question</a></li>
   <li><a href="#literature" id="toc-literature" class="nav-link" data-scroll-target="#literature">Literature</a></li>
-  <li><a href="#glimpse-of-data" id="toc-glimpse-of-data" class="nav-link" data-scroll-target="#glimpse-of-data">Glimpse of data</a></li>
   </ul></li>
   <li><a href="#data-2" id="toc-data-2" class="nav-link" data-scroll-target="#data-2">Data 2</a>
   <ul class="collapse">
   <li><a href="#introduction-and-data-1" id="toc-introduction-and-data-1" class="nav-link" data-scroll-target="#introduction-and-data-1">Introduction and data</a></li>
   <li><a href="#research-question-1" id="toc-research-question-1" class="nav-link" data-scroll-target="#research-question-1">Research question</a></li>
   <li><a href="#literature-1" id="toc-literature-1" class="nav-link" data-scroll-target="#literature-1">Literature</a></li>
-  <li><a href="#glimpse-of-data-1" id="toc-glimpse-of-data-1" class="nav-link" data-scroll-target="#glimpse-of-data-1">Glimpse of data</a></li>
+  <li><a href="#glimpse-of-data" id="toc-glimpse-of-data" class="nav-link" data-scroll-target="#glimpse-of-data">Glimpse of data</a></li>
   </ul></li>
   <li><a href="#data-3" id="toc-data-3" class="nav-link" data-scroll-target="#data-3">Data 3</a>
   <ul class="collapse">
   <li><a href="#introduction-and-data-2" id="toc-introduction-and-data-2" class="nav-link" data-scroll-target="#introduction-and-data-2">Introduction and data</a></li>
   <li><a href="#research-question-2" id="toc-research-question-2" class="nav-link" data-scroll-target="#research-question-2">Research question</a></li>
   <li><a href="#literature-2" id="toc-literature-2" class="nav-link" data-scroll-target="#literature-2">Literature</a></li>
-  <li><a href="#glimpse-of-data-2" id="toc-glimpse-of-data-2" class="nav-link" data-scroll-target="#glimpse-of-data-2">Glimpse of data</a></li>
+  <li><a href="#glimpse-of-data-1" id="toc-glimpse-of-data-1" class="nav-link" data-scroll-target="#glimpse-of-data-1">Glimpse of data</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -220,7 +219,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li><p>The source of the data is data.medicaid.gov.</p></li>
 <li><p>It was originally collected in 2018 and is collected by reports of each state for covered outpatient drugs that are paid for by state Medicaid agencies since the start of the Medicaid Drug Rebate Program.</p></li>
-<li><p>Write a brief description of the observations.</p></li>
+<li><p>I can see that there are a wide range of states, if not all of the states listed for the usage of a large sum of drugs, however i will only be focusing on Prozac which is a commonly used anti-depressant drug.</p></li>
 </ul>
 </section>
 <section id="research-question" class="level2">
@@ -234,13 +233,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="literature" class="level2">
 <h2 class="anchored" data-anchor-id="literature">Literature</h2>
 <ul>
-<li><p>Find one published credible article on the topic you are interested in researching.</p></li>
-<li><p>Provide a one paragraph summary about the article.</p></li>
-<li><p>In 1-2 sentences, explain how your research question builds on / is different than the article you have cited.</p></li>
+<li><p>https://www.ncbi.nlm.nih.gov/books/NBK459223/</p></li>
+<li><p>This article goes into the depth the impact of Prozac in various situations as well as why Prozac is used and for what kinds of patients. It outlines the FDA approved portions of the drug and the parts that are left to therapist and mental health specialist. Furthermore, it gives details of the adverse effects and symptoms of the drug. What this article does more than any others is gives advice for enhancing healthcare team outcomes and places preganant women and children at the forefront because children as young as 8 can use Prozac.</p></li>
+<li><p>My research question builds on and is different from the article because its focus on the usage of prozac in different states in a particular year and allows space to dive into the political and social sphere of that specific year. Rather the article is more generalized and not specific to state usage numbers, medicaid and one particular year. ## Glimpse of data</p></li>
 </ul>
-</section>
-<section id="glimpse-of-data" class="level2">
-<h2 class="anchored" data-anchor-id="glimpse-of-data">Glimpse of data</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>prozac_utilization <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -303,8 +299,8 @@ $ non_medicaid_amount_reimbursed &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA,
 <li><p>In 1-2 sentences, explain how your research question builds on / is different than the article you have cited.</p></li>
 </ul>
 </section>
-<section id="glimpse-of-data-1" class="level2">
-<h2 class="anchored" data-anchor-id="glimpse-of-data-1">Glimpse of data</h2>
+<section id="glimpse-of-data" class="level2">
+<h2 class="anchored" data-anchor-id="glimpse-of-data">Glimpse of data</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>drugs <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/drugs.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -404,8 +400,8 @@ $ `Rates.Tobacco.Use Past Month.26+`                  &lt;dbl&gt; 0.330659, 0.30
 <li><p>In 1-2 sentences, explain how your research question builds on / is different than the article you have cited.</p></li>
 </ul>
 </section>
-<section id="glimpse-of-data-2" class="level2">
-<h2 class="anchored" data-anchor-id="glimpse-of-data-2">Glimpse of data</h2>
+<section id="glimpse-of-data-1" class="level2">
+<h2 class="anchored" data-anchor-id="glimpse-of-data-1">Glimpse of data</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
