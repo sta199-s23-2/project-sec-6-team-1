@@ -25,14 +25,14 @@
     "href": "proposal.html#introduction-and-data",
     "title": "Project title",
     "section": "Introduction and data",
-    "text": "Introduction and data\n\nIdentify the source of the data.\nState when and how it was originally collected (by the original data curator, not necessarily how you found the data).\nWrite a brief description of the observations."
+    "text": "Introduction and data\n\nThe source of the data is data.medicaid.gov.\nIt was originally collected in 2018 and is collected by reports of each state for covered outpatient drugs that are paid for by state Medicaid agencies since the start of the Medicaid Drug Rebate Program.\nWrite a brief description of the observations."
   },
   {
     "objectID": "proposal.html#research-question",
     "href": "proposal.html#research-question",
     "title": "Project title",
     "section": "Research question",
-    "text": "Research question\n\nA well formulated research question. (You may include more than one research question if you want to receive feedback on different ideas for your project. However, one per data set is required.)\nA description of the research topic along with a concise statement of your hypotheses on this topic.\nIdentify the types of variables in your research question. Categorical? Quantitative?"
+    "text": "Research question\n\nWhat is the utilization of Prozac like in various states for outpatients that have medicaid in 2013 and why was the utilization so high or low, what factors impacted the utilization rates?\nThe research topic has a lot to do with trying to tie the rate of prozac usage to depression levels of medicaid users in 2013. This then allows us to view the outsidde factors that might have been impacting depression levels in 2013. If prozac suppression usage is high, then in the year 2013 depression levels were high as well especially in black and brown communities because they are the majority of medicaid users.\nThere are both categorical and quantitative variables, the categorical consist of the type of drug, suppression usage(true or false), and states. The quantitative is package sizes, year and quarters."
   },
   {
     "objectID": "proposal.html#literature",
@@ -46,7 +46,7 @@
     "href": "proposal.html#glimpse-of-data",
     "title": "Project title",
     "section": "Glimpse of data",
-    "text": "Glimpse of data\n\n# add code here"
+    "text": "Glimpse of data\n\nprozac_utilization <- read_csv(\"data/data.csv\")\n\nRows: 498 Columns: 15\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (6): utilization_type, state, ndc, labeler_code, package_size, product_name\ndbl (8): product_code, year, quarter, units_reimbursed, number_of_prescripti...\nlgl (1): suppression_used\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\nglimpse(prozac_utilization)\n\nRows: 498\nColumns: 15\n$ utilization_type               <chr> \"FFSU\", \"FFSU\", \"MCOU\", \"MCOU\", \"MCOU\",…\n$ state                          <chr> \"FL\", \"FL\", \"FL\", \"FL\", \"FL\", \"FL\", \"FL…\n$ ndc                            <chr> \"00777310402\", \"00777310502\", \"00777310…\n$ labeler_code                   <chr> \"00777\", \"00777\", \"00777\", \"00777\", \"00…\n$ product_code                   <dbl> 3104, 3105, 3105, 3105, 3107, 3104, 310…\n$ package_size                   <chr> \"02\", \"02\", \"02\", \"30\", \"30\", \"02\", \"02…\n$ year                           <dbl> 2013, 2013, 2013, 2013, 2013, 2013, 201…\n$ quarter                        <dbl> 4, 4, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 1, …\n$ suppression_used               <lgl> TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRU…\n$ product_name                   <chr> \"PROZAC\", \"PROZAC\", \"PROZAC\", \"PROZAC\",…\n$ units_reimbursed               <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…\n$ number_of_prescriptions        <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…\n$ total_amount_reimbursed        <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…\n$ medicaid_amount_reimbursed     <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…\n$ non_medicaid_amount_reimbursed <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…"
   },
   {
     "objectID": "proposal.html#introduction-and-data-1",

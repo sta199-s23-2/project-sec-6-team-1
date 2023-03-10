@@ -16,19 +16,19 @@ library(tidyverse)
 
 ## Introduction and data
 
--   Identify the source of the data.
+-   The source of the data is data.medicaid.gov.
 
--   State when and how it was originally collected (by the original data curator, not necessarily how you found the data).
-
+-   It was originally collected in 2018 and is collected by reports of each state
+    for covered outpatient drugs that are paid for by state Medicaid agencies since the         start of the Medicaid Drug Rebate Program. 
+    
 -   Write a brief description of the observations.
 
 ## Research question
 
--   A well formulated research question. (You may include more than one research question if you want to receive feedback on different ideas for your project. However, one per data set is required.)
+-   What is the utilization of Prozac like in various states for outpatients that have medicaid in 2013 and why was the utilization so high or low, what factors impacted the utilization rates?
+-   The research topic has a lot to do with trying to tie the rate of prozac usage to depression levels of medicaid users in 2013. This then allows us to view the outsidde factors that might have been impacting depression levels in 2013. If prozac suppression usage is high, then in the year 2013 depression levels were high as well especially in black and brown communities because they are the majority of medicaid users.  
 
--   A description of the research topic along with a concise statement of your hypotheses on this topic.
-
--   Identify the types of variables in your research question. Categorical? Quantitative?
+-   There are both categorical and quantitative variables, the categorical consist of the type of drug, suppression usage(true or false), and states. The quantitative is package sizes, year and quarters. 
 
 ## Literature
 
@@ -43,11 +43,9 @@ library(tidyverse)
 ```{r}
 #| label: load-data-1
 
-youth_risk <- read_csv("data/DASH_-_Youth_Risk_Behavior_Surveillance_System__YRBSS___High_School____Including_Sexual_Orientation.csv")
+prozac_utilization <- read_csv("data/data.csv")
 
-glimpse(youth_risk)
-
-nrow(youth_risk)
+glimpse(prozac_utilization)
 ```
 
 # Data 2

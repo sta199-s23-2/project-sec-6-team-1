@@ -218,17 +218,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="introduction-and-data" class="level2">
 <h2 class="anchored" data-anchor-id="introduction-and-data">Introduction and data</h2>
 <ul>
-<li><p>Identify the source of the data.</p></li>
-<li><p>State when and how it was originally collected (by the original data curator, not necessarily how you found the data).</p></li>
+<li><p>The source of the data is data.medicaid.gov.</p></li>
+<li><p>It was originally collected in 2018 and is collected by reports of each state for covered outpatient drugs that are paid for by state Medicaid agencies since the start of the Medicaid Drug Rebate Program.</p></li>
 <li><p>Write a brief description of the observations.</p></li>
 </ul>
 </section>
 <section id="research-question" class="level2">
 <h2 class="anchored" data-anchor-id="research-question">Research question</h2>
 <ul>
-<li><p>A well formulated research question. (You may include more than one research question if you want to receive feedback on different ideas for your project. However, one per data set is required.)</p></li>
-<li><p>A description of the research topic along with a concise statement of your hypotheses on this topic.</p></li>
-<li><p>Identify the types of variables in your research question. Categorical? Quantitative?</p></li>
+<li><p>What is the utilization of Prozac like in various states for outpatients that have medicaid in 2013 and why was the utilization so high or low, what factors impacted the utilization rates?</p></li>
+<li><p>The research topic has a lot to do with trying to tie the rate of prozac usage to depression levels of medicaid users in 2013. This then allows us to view the outsidde factors that might have been impacting depression levels in 2013. If prozac suppression usage is high, then in the year 2013 depression levels were high as well especially in black and brown communities because they are the majority of medicaid users.</p></li>
+<li><p>There are both categorical and quantitative variables, the categorical consist of the type of drug, suppression usage(true or false), and states. The quantitative is package sizes, year and quarters.</p></li>
 </ul>
 </section>
 <section id="literature" class="level2">
@@ -242,7 +242,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="glimpse-of-data" class="level2">
 <h2 class="anchored" data-anchor-id="glimpse-of-data">Glimpse of data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>prozac_utilization <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 498 Columns: 15
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (6): utilization_type, state, ndc, labeler_code, package_size, product_name
+dbl (8): product_code, year, quarter, units_reimbursed, number_of_prescripti...
+lgl (1): suppression_used
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(prozac_utilization)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 498
+Columns: 15
+$ utilization_type               &lt;chr&gt; "FFSU", "FFSU", "MCOU", "MCOU", "MCOU",…
+$ state                          &lt;chr&gt; "FL", "FL", "FL", "FL", "FL", "FL", "FL…
+$ ndc                            &lt;chr&gt; "00777310402", "00777310502", "00777310…
+$ labeler_code                   &lt;chr&gt; "00777", "00777", "00777", "00777", "00…
+$ product_code                   &lt;dbl&gt; 3104, 3105, 3105, 3105, 3107, 3104, 310…
+$ package_size                   &lt;chr&gt; "02", "02", "02", "30", "30", "02", "02…
+$ year                           &lt;dbl&gt; 2013, 2013, 2013, 2013, 2013, 2013, 201…
+$ quarter                        &lt;dbl&gt; 4, 4, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 1, …
+$ suppression_used               &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRU…
+$ product_name                   &lt;chr&gt; "PROZAC", "PROZAC", "PROZAC", "PROZAC",…
+$ units_reimbursed               &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+$ number_of_prescriptions        &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+$ total_amount_reimbursed        &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+$ medicaid_amount_reimbursed     &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+$ non_medicaid_amount_reimbursed &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</code></pre>
+</div>
 </div>
 </section>
 </section>
@@ -275,7 +306,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="glimpse-of-data-1" class="level2">
 <h2 class="anchored" data-anchor-id="glimpse-of-data-1">Glimpse of data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>drugs <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/drugs.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>drugs <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/drugs.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 867 Columns: 53
 ── Column specification ────────────────────────────────────────────────────────
@@ -286,7 +317,7 @@ dbl (52): Year, Population.12-17, Population.18-25, Population.26+, Totals.A...
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(drugs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(drugs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 867
 Columns: 53
@@ -376,7 +407,7 @@ $ `Rates.Tobacco.Use Past Month.26+`                  &lt;dbl&gt; 0.330659, 0.30
 <section id="glimpse-of-data-2" class="level2">
 <h2 class="anchored" data-anchor-id="glimpse-of-data-2">Glimpse of data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
