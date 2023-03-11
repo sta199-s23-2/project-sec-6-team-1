@@ -12,6 +12,7 @@ editor: visual
 library(tidyverse)
 ```
 
+
 # Data 1
 
 ## Introduction and data
@@ -38,6 +39,7 @@ library(tidyverse)
 
 -   My research question builds on and is different from the article because its focus on the usage of prozac in different states in a particular year and allows space to dive into the political and social sphere of that specific year. Rather the article is more generalized and not specific to state usage numbers, medicaid and one particular year. \## Glimpse of data
 
+
 ```{r}
 #| label: load-data-1
 
@@ -45,6 +47,7 @@ prozac_utilization <- read_csv("data/data.csv")
 
 glimpse(prozac_utilization)
 ```
+
 
 # Data 2
 
@@ -80,6 +83,7 @@ glimpse(prozac_utilization)
 
 ## Glimpse of data
 
+
 ```{r}
 #| label: load-data-2
 
@@ -87,6 +91,7 @@ drugs <- read_csv("data/drugs.csv")
 
 glimpse(drugs)
 ```
+
 
 # Data 3
 
@@ -148,6 +153,7 @@ glimpse(drugs)
 
 ## Glimpse of data
 
+
 ```{r}
 #| label: load-data-3
 
@@ -159,3 +165,4 @@ jails <- read_csv("data/all_jails.csv")
 
 glimpse(jails)
 ```
+
