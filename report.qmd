@@ -7,4 +7,22 @@ execute:
   echo: true
 ---
 
-Add project writeup here.
+```{r}
+#| label: load_data
+
+library(tidyverse)
+
+drugs <- read_csv("data/drugs.csv")
+
+glimpse(drugs)
+```
+
+```{r}
+#| label: load_data
+
+drugs |>
+  ggplot(
+    aes(x = Year, y = )
+  )
+
+```
