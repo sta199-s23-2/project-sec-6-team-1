@@ -15,6 +15,12 @@ library(tidyverse)
 drugs <- read_csv("data/drugs.csv")
 
 glimpse(drugs)
+
+NC <- drugs |>
+  filter(State == "North Carolina")
+NC = subset(NC, select = -c(State))
+glimpse(NC)
+
 ```
 
 ```{r}
@@ -22,7 +28,7 @@ glimpse(drugs)
 
 drugs |>
   ggplot(
-    aes(x = Year, y = )
+    aes(x = Year, y = Population.12-17)
   )
 
 ```
