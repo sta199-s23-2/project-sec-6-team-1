@@ -238,3 +238,46 @@ NC |>
   geom_line()
 ```
 
+
+```{r}
+#| label: all_12_17
+all_12_17 <- NC |>
+  pivot_longer(cols = c('rate_alc_dis_yr_12_17','rate_alc_mon_12_17','rate_tob_cig_mon_12_17', 'rate_coc_12_17', 'rate_mar_12_17', 'rate_mar_mon_12_17', 'rate_mar_yr_12_17' , 'rate_tob_mon_12_17' ), names_to = "Type", values_to = "Rates") |>
+  select(c("Type", "Rates", "Year"))
+
+all_12_17 |>
+  ggplot(
+    aes(x = Year, y = Rates, color = Type)
+  ) + 
+  geom_line()
+```
+
+
+
+```{r}
+#| label: all_18_25
+all_18_25 <- NC |>
+  pivot_longer(cols = c('rate_alc_dis_yr_18_25','rate_alc_mon_18_25','rate_tob_cig_mon_18_25', 'rate_coc_18_25', 'rate_mar_18_25', 'rate_mar_mon_18_25', 'rate_mar_yr_18_25' , 'rate_tob_mon_18_25' ), names_to = "Type", values_to = "Rates") |>
+  select(c("Type", "Rates", "Year"))
+
+all_18_25 |>
+  ggplot(
+    aes(x = Year, y = Rates, color = Type)
+  ) + 
+  geom_line()
+```
+
+
+
+```{r}
+#| label: all_26
+all_26 <- NC |>
+  pivot_longer(cols = c('rate_alc_dis_yr_26','rate_alc_mon_26','rate_tob_cig_mon_26', 'rate_coc_26', 'rate_mar_26', 'rate_mar_mon_26', 'rate_mar_yr_26' , 'rate_tob_mon_26' ), names_to = "Type", values_to = "Rates") |>
+  select(c("Type", "Rates", "Year"))
+
+all_26 |>
+  ggplot(
+    aes(x = Year, y = Rates, color = Type)
+  ) + 
+  geom_line()
+```
