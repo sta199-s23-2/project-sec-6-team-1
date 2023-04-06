@@ -20,22 +20,14 @@ library(ggplot2)
 
 drugs <- read_csv("data/drugs.csv")
 
-glimpse(drugs)
-
-NC <- drugs |>
-  filter(State == "North Carolina")
-NC = subset(NC, select = -c(State))
-glimpse(NC)
+# glimpse(drugs)
 
 ```
 
 ```{r}
-#| label: graphs
+#| label: rename_columns
 
-# colnames(drugs)[colnames(drugs) == "Population.12-17"] ="pop_12_17"
-# colnames(drugs)[colnames(drugs) == "Population.12-17"] ="pop_12_17"
-
-drugs <- drugs |>
+new_drugs <- drugs |>
   rename("pop_12_17" = "Population.12-17") |>
   rename("pop_18_25" = "Population.18-25") |>
   rename("pop_26" = "Population.26+") |>
@@ -66,42 +58,183 @@ drugs <- drugs |>
   rename("rate_coc_18_25" = "Rates.Illicit Drugs.Cocaine Used Past Year.18-25") |>
   rename("rate_coc_26" = "Rates.Illicit Drugs.Cocaine Used Past Year.26+") |>
   
-  # rename("tot_mar_12_17" = "Totals.Marijuana.New Users.12-17") |>
-  # rename("tot_mar_18_25" = "Totals.Marijuana.New Users.18-25") |>
-  # rename("tot_mar_26" = "Totals.Marijuana.New Users.26+") |>
-  # rename("rate_mar_12_17" = "Totals.Marijuana.New Users.12-17") |>
-  # rename("rate_mar_18_25" = "Totals.Marijuana.New Users.18-25") |>
-  # rename("rate_mar_26" = "Totals.Marijuana.New Users.26+") |>
+  rename("tot_mar_12_17" = "Totals.Marijuana.New Users.12-17") |>
+  rename("tot_mar_18_25" = "Totals.Marijuana.New Users.18-25") |>
+  rename("tot_mar_26" = "Totals.Marijuana.New Users.26+") |>
+  rename("rate_mar_12_17" = "Rates.Marijuana.New Users.12-17") |>
+  rename("rate_mar_18_25" = "Rates.Marijuana.New Users.18-25") |>
+  rename("rate_mar_26" = "Rates.Marijuana.New Users.26+") |>
   
-  # rename("tot_mar_mon_12_17" = "Totals.Marijuana Used Past Month.12-17") |>
-  # rename("tot_mar_mon_18_25" = "Totals.Marijuana Used Past Month.18-25") |>
-  # rename("tot_mar_mon_26" = "Totals.Marijuana Used Past Month.26+") |>
-  # rename("rate_mar_mon_12_17" = "Rates.Marijuana Used Past Month.12-17") |>
-  # rename("rate_mar_mon_18_25" = "Rates.Marijuana Used Past Month.18-25") |>
-  # rename("rate_mar_mon_26" = "Rates.Marijuana Used Past Month.26+") |>
-  
-  # rename("tot_mar_yr_12_17" = "Totals.Marijuana Used Past Year.12-17") |>
-  # rename("tot_mar_yr_18_25" = "Totals.Marijuana Used Past Year.18-25") |>
-  # rename("tot_mar_yr_26" = "Totals.Marijuana Used Past Year.26+") |>
-  # rename("rate_mar_yr_12_17" = "Rates.Marijuana Used Past Year.12-17") |>
-  # rename("rate_mar_yr_18_25" = "Rates.Marijuana Used Past Year.18-25") |>
-  # rename("rate_mar_yr_26" = "Rates.Marijuana Used Past Year.26+") |>
-  
-  # rename("tot_tob_mon_12_17" = "Totals.Tobacco Used Past Month.12-17") |>
-  # rename("tot_tob_mon_18_25" = "Totals.Tobacco Used Past Month.18-25") |>
-  # rename("tot_tob_mon_26" = "Totals.Tobacco Used Past Month.26+") |>
-  # rename("rate_tob_mon_12_17" = "Rates.Tobacco Used Past Month.12-17") |>
-  # rename("rate_tob_mon_18_25" = "Rates.Tobacco Used Past Month.18-25") |>
-  # rename("rate_tob_mon_26" = "Rates.Tobacco Used Past Month.26+") 
-  
-  
-  
-  
+  rename("tot_mar_mon_12_17" = "Totals.Marijuana.Used Past Month.12-17") |>
+  rename("tot_mar_mon_18_25" = "Totals.Marijuana.Used Past Month.18-25") |>
+  rename("tot_mar_mon_26" = "Totals.Marijuana.Used Past Month.26+") |>
+  rename("rate_mar_mon_12_17" = "Rates.Marijuana.Used Past Month.12-17") |>
+  rename("rate_mar_mon_18_25" = "Rates.Marijuana.Used Past Month.18-25") |>
+  rename("rate_mar_mon_26" = "Rates.Marijuana.Used Past Month.26+") |>
 
-# drugs |>
-#   ggplot(
-#     aes(x = Year, y = Year)
-#   ) + 
-#   geom_line()
+  rename("tot_mar_yr_12_17" = "Totals.Marijuana.Used Past Year.12-17") |>
+  rename("tot_mar_yr_18_25" = "Totals.Marijuana.Used Past Year.18-25") |>
+  rename("tot_mar_yr_26" = "Totals.Marijuana.Used Past Year.26+") |>
+  rename("rate_mar_yr_12_17" = "Rates.Marijuana.Used Past Year.12-17") |>
+  rename("rate_mar_yr_18_25" = "Rates.Marijuana.Used Past Year.18-25") |>
+  rename("rate_mar_yr_26" = "Rates.Marijuana.Used Past Year.26+") |>
+
+  rename("tot_tob_mon_12_17" = "Totals.Tobacco.Use Past Month.12-17") |>
+  rename("tot_tob_mon_18_25" = "Totals.Tobacco.Use Past Month.18-25") |>
+  rename("tot_tob_mon_26" = "Totals.Tobacco.Use Past Month.26+") |>
+  rename("rate_tob_mon_12_17" = "Rates.Tobacco.Use Past Month.12-17") |>
+  rename("rate_tob_mon_18_25" = "Rates.Tobacco.Use Past Month.18-25") |>
+  rename("rate_tob_mon_26" = "Rates.Tobacco.Use Past Month.26+")
+  
+```
+
+```{r}
+#| label: filter_only_NC
+
+NC <- new_drugs |>
+  filter(State == "North Carolina")
+NC = subset(NC, select = -c(State))
+# glimpse(NC)
+```
+
+```{r}
+#| label: alc_disorder_graph_12_17
+NC |>
+  ggplot(
+    aes(x = Year, y = tot_coc_12_17)
+  ) + 
+  geom_line()
+```
+
+
+```{r}
+#| label: alc_disorder_graph
+tot_coc <- NC |>
+  pivot_longer(cols = c('tot_coc_12_17','tot_coc_18_25','tot_coc_26' ), names_to = "Age_Range", values_to = "Total_Cocaine") |>
+  select(c("Total_Cocaine", "Age_Range", "Year"))
+
+tot_coc |>
+  ggplot(
+    aes(x = Year, y = Total_Cocaine, color = Age_Range)
+  ) + 
+  geom_line()
+```
+
+
+
+```{r}
+#| label: illicit_drugs_cocaine_graph
+tot_alc_dis <- NC |>
+  pivot_longer(cols = c('tot_alc_dis_yr_12_17','tot_alc_dis_yr_18_25','tot_alc_dis_yr_26' ), names_to = "Age_Range", values_to = "Total_Alc_Disorder") |>
+  select(c("Total_Alc_Disorder", "Age_Range", "Year"))
+
+tot_alc_dis |>
+  ggplot(
+    aes(x = Year, y = Total_Alc_Disorder, color = Age_Range)
+  ) + 
+  geom_line()
+```
+
+```{r}
+#| label: tobacco_cigarettes_graph
+tot_tob_cig <- NC |>
+  pivot_longer(cols = c('tot_tob_cig_mon_12_17','tot_tob_cig_mon_18_25','tot_tob_cig_mon_26' ), names_to = "Age_Range", values_to = "Total_Tob_Cig") |>
+  select(c("Total_Tob_Cig", "Age_Range", "Year"))
+
+tot_tob_cig |>
+  ggplot(
+    aes(x = Year, y = Total_Tob_Cig, color = Age_Range)
+  ) + 
+  geom_line()
+
 
 ```
+
+```{r}
+NC |>
+  ggplot(
+    aes(x = Year, y = tot_tob_cig_mon_12_17)
+  ) + 
+  geom_line()
+```
+
+```{r}
+
+#| label: marijuana_new_users_graph
+tot_mar <- NC |>
+  pivot_longer(cols = c('tot_mar_12_17','tot_mar_18_25','tot_mar_26' ), names_to = "Age_Range", values_to = "Total_Marijuana") |>
+  select(c("Total_Marijuana", "Age_Range", "Year"))
+
+tot_mar |>
+  ggplot(
+    aes(x = Year, y = Total_Marijuana, color = Age_Range)
+  ) + 
+  geom_line()
+
+```
+
+
+```{r}
+
+#| label: marijuana_past_year_graph
+tot_mar_yr <- NC |>
+  pivot_longer(cols = c('tot_mar_yr_12_17','tot_mar_yr_18_25','tot_mar_yr_26' ), names_to = "Age_Range", values_to = "Total_Marijuana_Yr") |>
+  select(c("Total_Marijuana_Yr", "Age_Range", "Year"))
+
+tot_mar_yr |>
+  ggplot(
+    aes(x = Year, y = Total_Marijuana_Yr, color = Age_Range)
+  ) + 
+  geom_line()
+```
+
+```{r}
+#| label: marijuana_past_month_graph
+tot_mar_mon <- NC |>
+  pivot_longer(cols = c('tot_mar_mon_12_17','tot_mar_mon_18_25','tot_mar_mon_26' ), names_to = "Age_Range", values_to = "Total_Marijuana_Month") |>
+  select(c("Total_Marijuana_Month", "Age_Range", "Year"))
+
+tot_mar_mon |>
+  ggplot(
+    aes(x = Year, y = Total_Marijuana_Month, color = Age_Range)
+  ) + 
+  geom_line()
+```
+
+```{r}
+NC |>
+  ggplot(
+    aes(x = Year, y = tot_mar_mon_12_17)
+  ) + 
+  geom_line()
+```
+
+```{r}
+NC |>
+  ggplot(
+    aes(x = Year, y = rate_mar_mon_12_17)
+  ) + 
+  geom_line()
+```
+
+```{r}
+#| label: marijuana_past_month_graph
+tot_tob_mon <- NC |>
+  pivot_longer(cols = c('tot_tob_mon_12_17','tot_tob_mon_18_25','tot_tob_mon_26' ), names_to = "Age_Range", values_to = "Total_Tobacco_Month") |>
+  select(c("Total_Tobacco_Month", "Age_Range", "Year"))
+
+tot_tob_mon |>
+  ggplot(
+    aes(x = Year, y = Total_Tobacco_Month, color = Age_Range)
+  ) + 
+  geom_line()
+```
+
+```{r}
+NC |>
+  ggplot(
+    aes(x = Year, y = tot_tob_mon_12_17)
+  ) + 
+  geom_line()
+```
+
