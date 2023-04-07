@@ -455,7 +455,7 @@ all_12_17 |>
   ggplot(
     aes(x = Year, y = Rates, color = Type)
   ) + 
-  geom_line()
+  geom_line() 
 ```
 
 ```{r}
