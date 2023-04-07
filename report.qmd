@@ -11,10 +11,8 @@ execute:
 
 The source of the data is from CORGIS: The Collection of Really Great, Interesting, Situated Datasets, originally stored in the Substance Abuse & Mental Health Data Archive (SAMHDA). The data in the data set was collected from individual states from the National Survey on Drug Use and Health, which is taken once a year. The data ranges from 2002 to 2018. From the data, we can see that every state in the United States (including DC) is accounted for each year. The different drugs recorded in the data set are alcohol, tobacco, cocaine, and marijuana as well as an age range for each of them. There are 3 age ranges from 12-17, 18-25, and 26+. Also, there are totals and rates for each of the drugs that are recorded in the data set.
 
-Are there more people aged 18-25 using more tobacco or marijuana in the past month in 2018? What about in 2002? How has the usage of tobacco and marijuana changes from 2002 to 2018? Given the increase in legalization of medical and recreational cannabis and the increase in tobacco prevention education in the past several decades, we wanted to explore to see if the marijuana usage has been increasing and tobacco usage has been decreasing in all the age groups from 2002 to 2018. One guess would be that states that legalized marijuana would experience a significant increase in marijuana usage or higher rates overall. Through exploring the data, we hope to extract insights on potential causes or correlations with other variables in the data that affect the trends in drug usage. There are both categorical and quantitative variables involved in our research question. The states in the data set are categorical while the totals and rates of tobacco and marijuana are quantitative.
+Are there more people aged 18-25 using more tobacco or marijuana in the past month in 2018? What about in 2002? How has the usage of tobacco and marijuana changes from 2002 to 2018? Given the increase in legalization of medical and recreational cannabis (Forbes) and the increase in tobacco prevention education (Tobacco Free Kids) in the past several decades, we wanted to explore to see if the marijuana usage has been increasing and tobacco usage has been decreasing in all the age groups from 2002 to 2018. One guess would be that states that legalized marijuana would experience a significant increase in marijuana usage or higher rates overall. Through exploring the data, we hope to extract insights on potential causes or correlations with other variables in the data that affect the trends in drug usage. There are both categorical and quantitative variables involved in our research question. The states in the data set are categorical while the totals and rates of tobacco and marijuana are quantitative.
 
-
-**CITE SOURCES ON INCREASED LEGALIZATION AND EDUCATION **
 
 **Methodology**
 ```{r}
@@ -97,6 +95,121 @@ new_drugs <- drugs |>
 ```
 
 ```{r}
+#| label: nation_18_25
+nation_18_25 <- new_drugs |>
+  group_by(Year) |>
+  summarize(Marijuana = sum(tot_mar_mon_18_25)/ sum(pop_18_25),
+            Tobacco = sum(tot_tob_mon_18_25)/ sum(pop_18_25))
+
+nation_longer_18_25 <- nation_18_25 |>
+  pivot_longer(cols = c('Marijuana','Tobacco' ), 
+               names_to = "Drug", 
+               values_to = "Rates") |>
+  select(c("Drug", "Rates", "Year"))
+
+nation_longer_18_25|>
+  ggplot(
+    aes(x = Year, y = Rates, color = Drug)
+  ) + 
+  geom_line() +
+  labs(
+    title = "Tobacco and Marijuana Used in the Past Month (18-25 year olds)"
+  ) +
+  scale_y_continuous(labels = scales::percent)
+
+```
+
+
+```{r}
+nation_18_25 |>
+  filter(Year %in% c(2002, 2018))
+```
+
+Colorado (recreational legalized 2012):
+
+```{r}
+
+#| label: filter_only_CO
+
+CO <- new_drugs |>
+  filter(State == "Colorado")
+CO = subset(CO, select = -c(State))
+```
+
+```{r}
+#| label: co_18_25
+CO_18_25 <- CO |>
+  group_by(Year) |>
+  summarize(Marijuana = tot_mar_mon_18_25/pop_18_25,
+            Tobacco = tot_tob_mon_18_25/pop_18_25)
+
+CO_longer_18_25 <- CO_18_25 |>
+  pivot_longer(cols = c('Marijuana','Tobacco' ), names_to = "Drug", values_to = "Rates") |>
+  select(c("Drug", "Rates", "Year"))
+
+CO_longer_18_25|>
+  ggplot(
+    aes(x = Year, y = Rates, color = Drug)
+  ) + 
+  geom_line() +
+  labs(
+    title = "Tobacco and Marijuana Used in the Past Month in CO (18-25 year olds)"
+  ) +
+  scale_y_continuous(labels = scales::percent)
+
+```
+
+NC (only CBD with THC only legalized 2015):
+
+```{r}
+#| label: filter_only_NC
+NC <- new_drugs |>
+  filter(State == "North Carolina")
+NC = subset(NC, select = -c(State))
+```
+
+```{r}
+#| label:  c_18_25
+NC_18_25 <- NC |>
+  group_by(Year) |>
+  summarize(Marijuana = tot_mar_mon_18_25/pop_18_25,
+            Tobacco = tot_tob_mon_18_25/pop_18_25)
+
+NC_longer_18_25 <-NC_18_25 |>
+  pivot_longer(cols = c('Marijuana','Tobacco' ), names_to = "Drug", values_to = "Rates") |>
+  select(c("Drug", "Rates", "Year"))
+
+NC_longer_18_25|>
+  ggplot(
+    aes(x = Year, y = Rates, color = Drug)
+  ) + 
+  geom_line() +
+  labs(
+    title = "Tobacco and Marijuana Used in the Past Month in NC (18-25 year olds)"
+  ) +
+  scale_y_continuous(labels = scales::percent)
+
+```
+
+The methodology section should include visualizations and summary statistics relevant to your research question. You should also justify the choice of statistical method(s) used to answer your research question.
+
+**Results**
+
+Looking at the trends in past-month marijuana usage and past-month tobacco usage across the nation, the graph "Tobacco and Marijuana Used in the Past Month (18-25 year olds)" presents a generally steady increase in Marijuana usage rates from about 0.0017% in 2002 to 0.0226% in 2018. On the other hand, Tobacco usage rates decreased considerably from about 0.0450% in 2002 to 0.0251% in 2018. In both 2002 and 2018, there is a greater rate in tobacco than marijuana usage, but decrease in tobacco usage was much greater than the increase in marijuana usage. 
+
+Considering the possibility of increased legalization of marijuana affecting the increase in marijuana usage, we isolated two states: Colorado, which was one of the first states to legalize recreational marijuana, in 2012, and North Carolina, which hasn't legalized recreational marijuana but legalized CBD with THC only in 2015. In graph "Tobacco and Marijuana Used in the Past Month in CO (18-25 year olds)," marijuana usage rates increase more than the national averages increased by, surpassing the usage rates of tobacco usage in about 2016. While the trend continues in 2012, when recreational marijuana was elgalized, there isn't a significant increase afterward compared to the increase from 2002-2012. In graph "Tobacco and Marijuana Used in the Past Month in NC (18-25 year olds)," the trends are more similar to the national average rates, where tobacco decreases at a higher rate than marijuana usage increases. But, the marijunaa usage rate in NC fluctuates much more (between around 0.015% and 0.02%) than the national average. 
+
+Overall, we can see from 2002 to 2018, there is a general decrease in tobacco usage and increase in marijuana usage, especially in states where marijuana has been legalized. 
+
+**Sources**
+https://www.forbes.com/health/body/cannabis-legalization-by-state/
+https://www.tobaccofreekids.org/press-releases/2022_01_13_state-report-fy2022
+
+
+______
+
+
+```{r}
 #| label: nation_12_17
 nation_12_17 <- new_drugs |>
   group_by(Year) |>
@@ -121,28 +234,6 @@ nation_longer_12_17|>
 ```
 
 ```{r}
-#| label: nation_18_25
-nation_18_25 <- new_drugs |>
-  group_by(Year) |>
-  summarize(Marijuana = sum(tot_mar_mon_18_25),
-            Tobacco = sum(tot_tob_mon_18_25))
-
-nation_longer_18_25 <- nation_18_25 |>
-  pivot_longer(cols = c('Marijuana','Tobacco' ), names_to = "Drug", values_to = "Totals") |>
-  select(c("Drug", "Totals", "Year"))
-
-nation_longer_18_25|>
-  ggplot(
-    aes(x = Year, y = Totals, color = Drug)
-  ) + 
-  geom_line() +
-  labs(
-    title = "Tobacco and Marijuana Used in the Past Month (18-25 year olds)"
-  )
-
-```
-
-```{r}
 #| label: nation_26
 nation_26 <- new_drugs |>
   group_by(Year) |>
@@ -150,7 +241,9 @@ nation_26 <- new_drugs |>
             Tobacco = sum(tot_tob_mon_26))
 
 nation_longer_26 <- nation_26 |>
-  pivot_longer(cols = c('Marijuana','Tobacco' ), names_to = "Drug", values_to = "Totals") |>
+  pivot_longer(cols = c('Marijuana','Tobacco' ), 
+               names_to = "Drug", 
+               values_to = "Totals") |>
   select(c("Drug", "Totals", "Year"))
 
 nation_longer_26|>
@@ -163,92 +256,6 @@ nation_longer_26|>
   )
 
 ```
-
-Comparing CO (recreational legalized 2012) vs NC (not legalized)
-
-CO:
-
-```{r}
-
-#| label: filter_only_CO
-
-CO <- new_drugs |>
-  filter(State == "Colorado")
-CO = subset(CO, select = -c(State))
-
-
-```
-
-```{r}
-#| label: co_18_25
-CO_18_25 <- CO |>
-  group_by(Year) |>
-  summarize(Marijuana = tot_mar_mon_18_25,
-            Tobacco = tot_tob_mon_18_25)
-
-CO_longer_18_25 <- CO_18_25 |>
-  pivot_longer(cols = c('Marijuana','Tobacco' ), names_to = "Drug", values_to = "Totals") |>
-  select(c("Drug", "Totals", "Year"))
-
-CO_longer_18_25|>
-  ggplot(
-    aes(x = Year, y = Totals, color = Drug)
-  ) + 
-  geom_line() +
-  labs(
-    title = "Tobacco and Marijuana Used in the Past Month in CO (18-25 year olds)"
-  )
-
-```
-
-NC:
-
-```{r}
-
-#| label: filter_only_NC
-
-NC <- new_drugs |>
-  filter(State == "North Carolina")
-NC = subset(CO, select = -c(State))
-
-
-```
-
-```{r}
-#| label:  c_18_25
-NC_18_25 <- NC |>
-  group_by(Year) |>
-  summarize(Marijuana = tot_mar_mon_18_25,
-            Tobacco = tot_tob_mon_18_25)
-
-NC_longer_18_25 <-NC_18_25 |>
-  pivot_longer(cols = c('Marijuana','Tobacco' ), names_to = "Drug", values_to = "Totals") |>
-  select(c("Drug", "Totals", "Year"))
-
-NC_longer_18_25|>
-  ggplot(
-    aes(x = Year, y = Totals, color = Drug)
-  ) + 
-  geom_line() +
-  labs(
-    title = "Tobacco and Marijuana Used in the Past Month in NC (18-25 year olds)"
-  )
-
-```
-
-The methodology section should include visualizations and summary statistics relevant to your research question. You should also justify the choice of statistical method(s) used to answer your research question.
-
-**Results**
-
-Showcase how you arrived at answers to your research question using the techniques we have learned in class (and beyond, if you're feeling adventurous).
-
-Provide only the main results from your analysis. The goal is not to do an exhaustive data analysis (calculate every possible statistic and perform every possible procedure for all variables). Rather, you should demonstrate that you are proficient at asking meaningful questions and answering them using data, that you are skilled in interpreting and presenting results, and that you can accomplish these tasks using R. More is not better.
-
-
-
-______
-
-
 
 ```{r}
 #| label: filter_only_NC
