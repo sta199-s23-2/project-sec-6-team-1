@@ -7,6 +7,16 @@ execute:
   echo: true
 ---
 
+**Introduction and data**
+
+The source of the data is from CORGIS: The Collection of Really Great, Interesting, Situated Datasets, originally stored in the Substance Abuse & Mental Health Data Archive (SAMHDA). The data in the data set was collected from individual states from the National Survey on Drug Use and Health, which is taken once a year. The data ranges from 2002 to 2018. From the data, we can see that every state in the United States (including DC) is accounted for each year. The different drugs recorded in the data set are alcohol, tobacco, cocaine, and marijuana as well as an age range for each of them. There are 3 age ranges from 12-17, 18-25, and 26+. Also, there are totals and rates for each of the drugs that are recorded in the data set.
+
+Are there more people aged 18-25 using more tobacco or marijuana in the past month in 2018? What about in 2002? How has the usage of tobacco and marijuana changes from 2002 to 2018? Given the increase in legalization of medical and recreational cannabis and the increase in tobacco prevention education in the past several decades, we wanted to explore to see if the marijuana usage has been increasing and tobacco usage has been decreasing in all the age groups from 2002 to 2018. Through exploring the data, we hope to extract insights on potential causes or correlations with other variables in the data that affect the trends in drug usage. There are both categorical and quantitative variables involved in our research question. The states in the data set are categorical while the totals and rates of tobacco and marijuana are quantitative.
+
+
+**CITE SOURCES ON INCREASED LEGALIZATION AND EDUCATION **
+
+**Methodology**
 ```{r}
 #| label: load_libraries
 
@@ -19,8 +29,6 @@ library(ggplot2)
 #| label: load_data
 
 drugs <- read_csv("data/drugs.csv")
-
-# glimpse(drugs)
 
 ```
 
@@ -89,6 +97,160 @@ new_drugs <- drugs |>
 ```
 
 ```{r}
+#| label: nation_12_17
+nation_12_17 <- new_drugs |>
+  group_by(Year) |>
+  summarize(Marijuana = sum(tot_mar_mon_12_17),
+            Tobacco = sum(tot_tob_mon_12_17))
+
+nation_longer_12_17 <- nation_12_17 |>
+  pivot_longer(cols = c('Marijuana','Tobacco' ), 
+               names_to = "Drug", 
+               values_to = "Totals") |>
+  select(c("Drug", "Totals", "Year"))
+
+nation_longer_12_17|>
+  ggplot(
+    aes(x = Year, y = Totals, color = Drug)
+  ) + 
+  geom_line() + 
+  labs(
+    title = "Tobacco and Marijuana Used in the Past Month (12-17 year olds)"
+  )
+
+```
+
+```{r}
+#| label: nation_18_25
+nation_18_25 <- new_drugs |>
+  group_by(Year) |>
+  summarize(Marijuana = sum(tot_mar_mon_18_25),
+            Tobacco = sum(tot_tob_mon_18_25))
+
+nation_longer_18_25 <- nation_18_25 |>
+  pivot_longer(cols = c('Marijuana','Tobacco' ), names_to = "Drug", values_to = "Totals") |>
+  select(c("Drug", "Totals", "Year"))
+
+nation_longer_18_25|>
+  ggplot(
+    aes(x = Year, y = Totals, color = Drug)
+  ) + 
+  geom_line() +
+  labs(
+    title = "Tobacco and Marijuana Used in the Past Month (18-25 year olds)"
+  )
+
+```
+
+```{r}
+#| label: nation_26
+nation_26 <- new_drugs |>
+  group_by(Year) |>
+  summarize(Marijuana = sum(tot_mar_mon_26),
+            Tobacco = sum(tot_tob_mon_26))
+
+nation_longer_26 <- nation_26 |>
+  pivot_longer(cols = c('Marijuana','Tobacco' ), names_to = "Drug", values_to = "Totals") |>
+  select(c("Drug", "Totals", "Year"))
+
+nation_longer_26|>
+  ggplot(
+    aes(x = Year, y = Totals, color = Drug)
+  ) + 
+  geom_line() +
+  labs(
+    title = "Tobacco and Marijuana Used in the Past Month (26+ year olds)"
+  )
+
+```
+
+Comparing CO (recreational legalized 2012) vs NC (not legalized)
+
+CO:
+
+```{r}
+
+#| label: filter_only_CO
+
+CO <- new_drugs |>
+  filter(State == "Colorado")
+CO = subset(CO, select = -c(State))
+
+
+```
+
+```{r}
+#| label: co_18_25
+CO_18_25 <- CO |>
+  group_by(Year) |>
+  summarize(Marijuana = tot_mar_mon_18_25,
+            Tobacco = tot_tob_mon_18_25)
+
+CO_longer_18_25 <- CO_18_25 |>
+  pivot_longer(cols = c('Marijuana','Tobacco' ), names_to = "Drug", values_to = "Totals") |>
+  select(c("Drug", "Totals", "Year"))
+
+CO_longer_18_25|>
+  ggplot(
+    aes(x = Year, y = Totals, color = Drug)
+  ) + 
+  geom_line() +
+  labs(
+    title = "Tobacco and Marijuana Used in the Past Month in CO (18-25 year olds)"
+  )
+
+```
+
+NC:
+
+```{r}
+
+#| label: filter_only_NC
+
+NC <- new_drugs |>
+  filter(State == "North Carolina")
+NC = subset(CO, select = -c(State))
+
+
+```
+
+```{r}
+#| label:  c_18_25
+NC_18_25 <- NC |>
+  group_by(Year) |>
+  summarize(Marijuana = tot_mar_mon_18_25,
+            Tobacco = tot_tob_mon_18_25)
+
+NC_longer_18_25 <-NC_18_25 |>
+  pivot_longer(cols = c('Marijuana','Tobacco' ), names_to = "Drug", values_to = "Totals") |>
+  select(c("Drug", "Totals", "Year"))
+
+NC_longer_18_25|>
+  ggplot(
+    aes(x = Year, y = Totals, color = Drug)
+  ) + 
+  geom_line() +
+  labs(
+    title = "Tobacco and Marijuana Used in the Past Month in NC (18-25 year olds)"
+  )
+
+```
+
+The methodology section should include visualizations and summary statistics relevant to your research question. You should also justify the choice of statistical method(s) used to answer your research question.
+
+**Results**
+
+Showcase how you arrived at answers to your research question using the techniques we have learned in class (and beyond, if you're feeling adventurous).
+
+Provide only the main results from your analysis. The goal is not to do an exhaustive data analysis (calculate every possible statistic and perform every possible procedure for all variables). Rather, you should demonstrate that you are proficient at asking meaningful questions and answering them using data, that you are skilled in interpreting and presenting results, and that you can accomplish these tasks using R. More is not better.
+
+
+
+______
+
+
+
+```{r}
 #| label: filter_only_NC
 
 NC <- new_drugs |>
@@ -106,7 +268,6 @@ NC |>
   geom_line()
 ```
 
-
 ```{r}
 #| label: alc_disorder_graph
 tot_coc <- NC |>
@@ -119,8 +280,6 @@ tot_coc |>
   ) + 
   geom_line()
 ```
-
-
 
 ```{r}
 #| label: illicit_drugs_cocaine_graph
@@ -172,7 +331,6 @@ tot_mar |>
   geom_line()
 
 ```
-
 
 ```{r}
 
@@ -238,7 +396,6 @@ NC |>
   geom_line()
 ```
 
-
 ```{r}
 #| label: all_12_17
 all_12_17 <- NC |>
@@ -251,8 +408,6 @@ all_12_17 |>
   ) + 
   geom_line()
 ```
-
-
 
 ```{r}
 #| label: all_18_25
@@ -267,7 +422,55 @@ all_18_25 |>
   geom_line()
 ```
 
+```{r}
+#| label: all_26
+all_26 <- NC |>
+  pivot_longer(cols = c('rate_alc_dis_yr_26','rate_alc_mon_26','rate_tob_cig_mon_26', 'rate_coc_26', 'rate_mar_26', 'rate_mar_mon_26', 'rate_mar_yr_26' , 'rate_tob_mon_26' ), names_to = "Type", values_to = "Rates") |>
+  select(c("Type", "Rates", "Year"))
 
+all_26 |>
+  ggplot(
+    aes(x = Year, y = Rates, color = Type)
+  ) + 
+  geom_line()
+```
+
+
+
+```{r}
+CO |>
+  ggplot(
+    aes(x = Year, y = rate_mar_26)
+  ) + 
+  geom_line()
+```
+
+
+```{r}
+#| label: all_12_17
+all_12_17 <- CO |>
+  pivot_longer(cols = c('rate_alc_dis_yr_12_17','rate_alc_mon_12_17','rate_tob_cig_mon_12_17', 'rate_coc_12_17', 'rate_mar_12_17', 'rate_mar_mon_12_17', 'rate_mar_yr_12_17' , 'rate_tob_mon_12_17' ), names_to = "Type", values_to = "Rates") |>
+  select(c("Type", "Rates", "Year"))
+
+all_12_17 |>
+  ggplot(
+    aes(x = Year, y = Rates, color = Type)
+  ) + 
+  geom_line()
+```
+
+```{r}
+#| label: all_18_25
+all_18_25 <- CO |>
+  pivot_longer(cols = c('rate_alc_dis_yr_18_25','rate_alc_mon_18_25','rate_tob_cig_mon_18_25', 'rate_coc_18_25', 'rate_mar_18_25', 'rate_mar_mon_18_25', 'rate_mar_yr_18_25' , 'rate_tob_mon_18_25' ), names_to = "Type", values_to = "Rates") |>
+  select(c("Type", "Rates", "Year"))
+
+all_18_25 |>
+  ggplot(
+    aes(x = Year, y = Rates, color = Type)
+  ) + 
+  geom_line()
+```
 
 ```{r}
 #| label: all_26
@@ -281,3 +484,7 @@ all_26 |>
   ) + 
   geom_line()
 ```
+
+
+
+
