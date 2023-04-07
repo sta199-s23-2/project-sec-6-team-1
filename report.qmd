@@ -13,8 +13,23 @@ The source of the data is from CORGIS: The Collection of Really Great, Interesti
 
 Are there more people aged 18-25 using more tobacco or marijuana in the past month in 2018? What about in 2002? How has the usage of tobacco and marijuana changes from 2002 to 2018? Given the increase in legalization of medical and recreational cannabis (Forbes) and the increase in tobacco prevention education (Tobacco Free Kids) in the past several decades, we wanted to explore to see if the marijuana usage has been increasing and tobacco usage has been decreasing in all the age groups from 2002 to 2018. One guess would be that states that legalized marijuana would experience a significant increase in marijuana usage or higher rates overall. Through exploring the data, we hope to extract insights on potential causes or correlations with other variables in the data that affect the trends in drug usage. There are both categorical and quantitative variables involved in our research question. The states in the data set are categorical while the totals and rates of tobacco and marijuana are quantitative.
 
+**Literature**
+
+Your Guide To Cannabis Legalization By State-- Forbes
+
+With Cannabis as the most commonly used illicit drug in the US, Forbes Health created a guides that lays out the uses and legislation of marijuana across the US. While some states like Alabama, Florida, and Pennslyvania legalize medical use only, other states like Colorado, Washington, and New York legalized marijuana completely. There is a full range of legislation between illegal and legal depending on each state, and the legislation continues to change up until today. 
+
+New Report: States Continue to Shortchange Tobacco Prevention Programs, But Several Show a Welcome Increase-- Tobacco-Free Kids
+Many states have increased funding for tobacco prevention programs. 
+
+More teens using marijuana with electronic smoking devices - Parent alert! Your kid may be vaping more than tobacco-- Forbes
+
+This article explores the usage of vapes that contain THC. They look at the change in popularity from cigarettes (tobacco) to e-cigarettes and vaping (nicotine) to new vapes that contain marijuana substances. Now, these vapes are becoming increasingly easy to access, leading to the rise of adolescents and young adults being exposed to marijuana.
+    
+
 
 **Methodology**
+
 ```{r}
 #| label: load_libraries
 
@@ -119,7 +134,6 @@ nation_longer_18_25|>
 
 ```
 
-
 ```{r}
 nation_18_25 |>
   filter(Year %in% c(2002, 2018))
@@ -195,19 +209,17 @@ The methodology section should include visualizations and summary statistics rel
 
 **Results**
 
-Looking at the trends in past-month marijuana usage and past-month tobacco usage across the nation, the graph "Tobacco and Marijuana Used in the Past Month (18-25 year olds)" presents a generally steady increase in Marijuana usage rates from about 0.0017% in 2002 to 0.0226% in 2018. On the other hand, Tobacco usage rates decreased considerably from about 0.0450% in 2002 to 0.0251% in 2018. In both 2002 and 2018, there is a greater rate in tobacco than marijuana usage, but decrease in tobacco usage was much greater than the increase in marijuana usage. 
+Looking at the trends in past-month marijuana usage and past-month tobacco usage across the nation, the graph "Tobacco and Marijuana Used in the Past Month (18-25 year olds)" presents a generally steady increase in Marijuana usage rates from about 0.0017% in 2002 to 0.0226% in 2018. On the other hand, Tobacco usage rates decreased considerably from about 0.0450% in 2002 to 0.0251% in 2018. In both 2002 and 2018, there is a greater rate in tobacco than marijuana usage, but decrease in tobacco usage was much greater than the increase in marijuana usage.
 
-Considering the possibility of increased legalization of marijuana affecting the increase in marijuana usage, we isolated two states: Colorado, which was one of the first states to legalize recreational marijuana, in 2012, and North Carolina, which hasn't legalized recreational marijuana but legalized CBD with THC only in 2015. In graph "Tobacco and Marijuana Used in the Past Month in CO (18-25 year olds)," marijuana usage rates increase more than the national averages increased by, surpassing the usage rates of tobacco usage in about 2016. While the trend continues in 2012, when recreational marijuana was elgalized, there isn't a significant increase afterward compared to the increase from 2002-2012. In graph "Tobacco and Marijuana Used in the Past Month in NC (18-25 year olds)," the trends are more similar to the national average rates, where tobacco decreases at a higher rate than marijuana usage increases. But, the marijunaa usage rate in NC fluctuates much more (between around 0.015% and 0.02%) than the national average. 
+Considering the possibility of increased legalization of marijuana affecting the increase in marijuana usage, we isolated two states: Colorado, which was one of the first states to legalize recreational marijuana, in 2012, and North Carolina, which hasn't legalized recreational marijuana but legalized CBD with THC only in 2015. In graph "Tobacco and Marijuana Used in the Past Month in CO (18-25 year olds)," marijuana usage rates increase more than the national averages increased by, surpassing the usage rates of tobacco usage in about 2016. While the trend continues in 2012, when recreational marijuana was elgalized, there isn't a significant increase afterward compared to the increase from 2002-2012. In graph "Tobacco and Marijuana Used in the Past Month in NC (18-25 year olds)," the trends are more similar to the national average rates, where tobacco decreases at a higher rate than marijuana usage increases. But, the marijunaa usage rate in NC fluctuates much more (between around 0.015% and 0.02%) than the national average.
 
-Overall, we can see from 2002 to 2018, there is a general decrease in tobacco usage and increase in marijuana usage, especially in states where marijuana has been legalized. 
+Overall, we can see from 2002 to 2018, there is a general decrease in tobacco usage and increase in marijuana usage, especially in states where marijuana has been legalized.
 
-**Sources**
-https://www.forbes.com/health/body/cannabis-legalization-by-state/
-https://www.tobaccofreekids.org/press-releases/2022_01_13_state-report-fy2022
+**Sources** 
+[Forbes- Your Guide To Cannabis Legalization By State](https://www.forbes.com/health/body/cannabis-legalization-by-state/) 
+[Tobacco-Free Kids- New Report: States Continue to Shortchange Tobacco Prevention Programs, But Several Show a Welcome Increase](https://www.tobaccofreekids.org/press-releases/2022_01_13_state-report-fy2022) [News-Bank- More teens using marijuana with electronic smoking devices - Parent alert! Your kid may be vaping more than tobacco](https://infoweb.newsbank.com/apps/news/document-view?p=WORLDNEWS&t=&sort=\_rank\_%3AD&fld-base-0=alltext&maxresults=20&val-base-0=are%20adolescents%20beginning%20to%20abuse%20marijuana%20more%20than%20tobacco%20&docref=news/16E335BBF826EC78)
 
-
-______
-
+------------------------------------------------------------------------
 
 ```{r}
 #| label: nation_12_17
@@ -442,8 +454,6 @@ all_26 |>
   geom_line()
 ```
 
-
-
 ```{r}
 CO |>
   ggplot(
@@ -451,7 +461,6 @@ CO |>
   ) + 
   geom_line()
 ```
-
 
 ```{r}
 #| label: all_12_17
@@ -491,7 +500,3 @@ all_26 |>
   ) + 
   geom_line()
 ```
-
-
-
-
