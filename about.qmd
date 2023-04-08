@@ -9,4 +9,4 @@ This project was developed by **team1** For [STA 199: Introduction to Data Scien
 -   Laura Cai: Laura is a freshman studying Computer Science and Statistics.
 -   Luke Hardin: Luke is a freshman studying Economics and Statistics.
 -   Andy Chen: Andy is a freshman studying Computer Science
--   Team member 4: One sentence description of Team member 4 (e.g., year, major, etc.).
+-   Team member 4: Jaden is a freshman studying Political Science and GSF
