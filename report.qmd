@@ -9,10 +9,11 @@ execute:
 
 **Introduction and data**
 
-The source of the data is from CORGIS: The Collection of Really Great, Interesting, Situated Datasets, originally stored in the Substance Abuse & Mental Health Data Archive (SAMHDA). The data in the data set was collected from individual states from the National Survey on Drug Use and Health, which is taken once a year. The data ranges from 2002 to 2018. From the data, we can see that every state in the United States (including DC) is accounted for each year. The different drugs recorded in the data set are alcohol, tobacco, cocaine, and marijuana as well as an age range for each of them. There are 3 age ranges from 12-17, 18-25, and 26+. Also, there are totals and rates for each of the drugs that are recorded in the data set.
+Our dataset contains alcohol, cigarette, cocaine, marijuana, and tobacco use statistics for all 50 states and the District of Columbia from 2002 - 2018, broken down into three age ranges: 12-17, 18-25, and 26+. The data comes from CORGIS: The Collection of Really Great, Interesting, Situated Datasets, and was originally stored in the Substance Abuse & Mental Health Data Archive (SAMHDA). The data was gathered from the annual National Survey on Drug Use and Health. 
 
-Are there more people aged 18-25 using more tobacco or marijuana in the past month in 2018? What about in 2002? How has the usage of tobacco and marijuana changes from 2002 to 2018? Given the increase in legalization of medical and recreational cannabis (Forbes) and the increase in tobacco prevention education (Tobacco Free Kids) in the past several decades, we wanted to explore to see if the marijuana usage has been increasing and tobacco usage has been decreasing in all the age groups from 2002 to 2018. One guess would be that states that legalized marijuana would experience a significant increase in marijuana usage or higher rates overall. Through exploring the data, we hope to extract insights on potential causes or correlations with other variables in the data that affect the trends in drug usage. There are both categorical and quantitative variables involved in our research question. The states in the data set are categorical while the totals and rates of tobacco and marijuana are quantitative.
+Given the increase in legalization of medical and recreational cannabis (Forbes) and the increase in tobacco prevention education (Tobacco Free Kids) in the past several decades, we wanted to explore to see if the marijuana usage has been increasing and tobacco usage has been decreasing among different age groups from 2002 to 2018. Our hypothesis is that states that legalized marijuana would experience a significant increase in marijuana usage over time. Through exploring the data, we hope to extract insights on potential causes or correlations with other variables in the data that affect trends in drug usage. There are both categorical and quantitative variables involved in our research question: the states in the data set are categorical while the totals and rates of tobacco and marijuana are quantitative.
 
+\
 **Methodology**
 
 ```{r}
@@ -113,7 +114,8 @@ nation_longer_18_25|>
   ) + 
   geom_line() +
   labs(
-    title = "Tobacco and Marijuana Used in the Past Month (18-25 year olds)"
+    title = "Tobacco and Marijuana Usage Rates",
+    subtitle = "18-25 year olds"
   ) +
   scale_y_continuous(labels = scales::percent)
 
@@ -152,7 +154,8 @@ CO_longer_18_25|>
   ) + 
   geom_line() +
   labs(
-    title = "Tobacco and Marijuana Used in the Past Month in CO (18-25 year olds)"
+    title = "Tobacco and Marijuana Usage Rates in CO",
+    subtitle = "18-25 year olds"
   ) +
   scale_y_continuous(labels = scales::percent)
 
@@ -184,13 +187,12 @@ NC_longer_18_25|>
   ) + 
   geom_line() +
   labs(
-    title = "Tobacco and Marijuana Used in the Past Month in NC (18-25 year olds)"
+    title = "Tobacco and Marijuana Usage Rates NC",
+    subtitle = "18-25 year olds"
   ) +
   scale_y_continuous(labels = scales::percent)
 
 ```
-
-The methodology section should include visualizations and summary statistics relevant to your research question. You should also justify the choice of statistical method(s) used to answer your research question.
 
 **Results**
 
