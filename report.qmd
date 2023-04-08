@@ -194,6 +194,8 @@ NC_longer_18_25|>
 
 ```
 
+To analyze the research question of whether marijuana use has been increasing and tobacco use has been decreasing among from 2002 to 2018, we graphed their usage rates over time to examine potential trends. In addition, we looked at states where marijuana was legalized (Colorado) compared to others where it has not been legalized (North Carolina) to observe any potential differences this caused.
+
 **Results**
 
 Looking at the trends in past-month marijuana usage and past-month tobacco usage across the nation, the graph "Tobacco and Marijuana Used in the Past Month (18-25 year olds)" presents a generally steady increase in Marijuana usage rates from about 0.0017% in 2002 to 0.0226% in 2018. On the other hand, Tobacco usage rates decreased considerably from about 0.0450% in 2002 to 0.0251% in 2018. In both 2002 and 2018, there is a greater rate in tobacco than marijuana usage, but decrease in tobacco usage was much greater than the increase in marijuana usage.
