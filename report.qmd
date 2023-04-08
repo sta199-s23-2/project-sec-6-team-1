@@ -374,6 +374,7 @@ NC |>
 ```
 
 ```{r}
+#| label: rate
 NC |>
   ggplot(
     aes(x = Year, y = rate_mar_mon_12_17)
@@ -395,6 +396,7 @@ tot_tob_mon |>
 ```
 
 ```{r}
+#| label: geomline1
 NC |>
   ggplot(
     aes(x = Year, y = tot_tob_mon_12_17)
@@ -442,6 +444,7 @@ all_26 |>
 ```
 
 ```{r}
+#| label: geomline
 
 CO |>
   ggplot(
