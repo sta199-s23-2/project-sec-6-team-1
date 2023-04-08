@@ -442,6 +442,7 @@ all_26 |>
 ```
 
 ```{r}
+
 CO |>
   ggplot(
     aes(x = Year, y = rate_mar_26)
@@ -486,4 +487,5 @@ all_26 |>
     aes(x = Year, y = Rates, color = Type)
   ) + 
   geom_line()
+
 ```
