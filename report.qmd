@@ -13,7 +13,10 @@ Our dataset contains alcohol, cigarette, cocaine, marijuana, and tobacco use sta
 
 Given the increase in legalization of medical and recreational cannabis (Forbes) and the increase in tobacco prevention education (Tobacco Free Kids) in the past several decades, we wanted to explore to see if the marijuana usage has been increasing and tobacco usage has been decreasing among different age groups from 2002 to 2018. Our hypothesis is that states that legalized marijuana would experience a significant increase in marijuana usage over time. Through exploring the data, we hope to extract insights on potential causes or correlations with other variables in the data that affect trends in drug usage. There are both categorical and quantitative variables involved in our research question: the states in the data set are categorical while the totals and rates of tobacco and marijuana are quantitative.
 
-\
+**Research Question**
+
+Do people aged 17-25 abuse tobacco or marijuana more on average in 2018 in comparison to 2002?
+
 **Methodology**
 
 ```{r}
