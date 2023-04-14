@@ -9,10 +9,11 @@ execute:
 
 **Introduction and data**
 
-The source of the data is from CORGIS: The Collection of Really Great, Interesting, Situated Datasets, originally stored in the Substance Abuse & Mental Health Data Archive (SAMHDA). The data in the data set was collected from individual states from the National Survey on Drug Use and Health, which is taken once a year. The data ranges from 2002 to 2018. From the data, we can see that every state in the United States (including DC) is accounted for each year. The different drugs recorded in the data set are alcohol, tobacco, cocaine, and marijuana as well as an age range for each of them. There are 3 age ranges from 12-17, 18-25, and 26+. Also, there are totals and rates for each of the drugs that are recorded in the data set.
+Our dataset contains alcohol, cigarette, cocaine, marijuana, and tobacco use statistics for all 50 states and the District of Columbia from 2002 - 2018, broken down into three age ranges: 12-17, 18-25, and 26+. The data comes from CORGIS: The Collection of Really Great, Interesting, Situated Datasets, and was originally stored in the Substance Abuse & Mental Health Data Archive (SAMHDA). The data was gathered from the annual National Survey on Drug Use and Health. 
 
-Are there more people aged 18-25 using more tobacco or marijuana in the past month in 2018? What about in 2002? How has the usage of tobacco and marijuana changes from 2002 to 2018? Given the increase in legalization of medical and recreational cannabis (Forbes) and the increase in tobacco prevention education (Tobacco Free Kids) in the past several decades, we wanted to explore to see if the marijuana usage has been increasing and tobacco usage has been decreasing in all the age groups from 2002 to 2018. One guess would be that states that legalized marijuana would experience a significant increase in marijuana usage or higher rates overall. Through exploring the data, we hope to extract insights on potential causes or correlations with other variables in the data that affect the trends in drug usage. There are both categorical and quantitative variables involved in our research question. The states in the data set are categorical while the totals and rates of tobacco and marijuana are quantitative.
+Given the increase in legalization of medical and recreational cannabis (Forbes) and the increase in tobacco prevention education (Tobacco Free Kids) in the past several decades, we wanted to explore to see if the marijuana usage has been increasing and tobacco usage has been decreasing among different age groups from 2002 to 2018. Our hypothesis is that states that legalized marijuana would experience a significant increase in marijuana usage over time. Through exploring the data, we hope to extract insights on potential causes or correlations with other variables in the data that affect trends in drug usage. There are both categorical and quantitative variables involved in our research question: the states in the data set are categorical while the totals and rates of tobacco and marijuana are quantitative.
 
+<<<<<<< HEAD
 **Literature**
 
 Your Guide To Cannabis Legalization By State-- Forbes
@@ -27,6 +28,11 @@ More teens using marijuana with electronic smoking devices - Parent alert! Your 
 This article explores the usage of vapes that contain THC. They look at the change in popularity from cigarettes (tobacco) to e-cigarettes and vaping (nicotine) to new vapes that contain marijuana substances. Now, these vapes are becoming increasingly easy to access, leading to the rise of adolescents and young adults being exposed to marijuana.
     
 
+=======
+**Research Question**
+
+Do people aged 17-25 abuse tobacco or marijuana more on average in 2018 in comparison to 2002?
+>>>>>>> 47b1a496f8f3d64752fb605fd4c26efb5f51ddd5
 
 **Methodology**
 
@@ -128,7 +134,8 @@ nation_longer_18_25|>
   ) + 
   geom_line() +
   labs(
-    title = "Tobacco and Marijuana Used in the Past Month (18-25 year olds)"
+    title = "Tobacco and Marijuana Usage Rates",
+    subtitle = "18-25 year olds"
   ) +
   scale_y_continuous(labels = scales::percent)
 
@@ -167,7 +174,8 @@ CO_longer_18_25|>
   ) + 
   geom_line() +
   labs(
-    title = "Tobacco and Marijuana Used in the Past Month in CO (18-25 year olds)"
+    title = "Tobacco and Marijuana Usage Rates in CO",
+    subtitle = "18-25 year olds"
   ) +
   scale_y_continuous(labels = scales::percent)
 
@@ -199,13 +207,14 @@ NC_longer_18_25|>
   ) + 
   geom_line() +
   labs(
-    title = "Tobacco and Marijuana Used in the Past Month in NC (18-25 year olds)"
+    title = "Tobacco and Marijuana Usage Rates NC",
+    subtitle = "18-25 year olds"
   ) +
   scale_y_continuous(labels = scales::percent)
 
 ```
 
-The methodology section should include visualizations and summary statistics relevant to your research question. You should also justify the choice of statistical method(s) used to answer your research question.
+To analyze the research question of whether marijuana use has been increasing and tobacco use has been decreasing among from 2002 to 2018, we graphed their usage rates over time to examine potential trends. In addition, we looked at states where marijuana was legalized (Colorado) compared to others where it has not been legalized (North Carolina) to observe any potential differences this caused.
 
 **Results**
 
@@ -215,9 +224,13 @@ Considering the possibility of increased legalization of marijuana affecting the
 
 Overall, we can see from 2002 to 2018, there is a general decrease in tobacco usage and increase in marijuana usage, especially in states where marijuana has been legalized.
 
+<<<<<<< HEAD
 **Sources** 
 [Forbes- Your Guide To Cannabis Legalization By State](https://www.forbes.com/health/body/cannabis-legalization-by-state/) 
 [Tobacco-Free Kids- New Report: States Continue to Shortchange Tobacco Prevention Programs, But Several Show a Welcome Increase](https://www.tobaccofreekids.org/press-releases/2022_01_13_state-report-fy2022) [News-Bank- More teens using marijuana with electronic smoking devices - Parent alert! Your kid may be vaping more than tobacco](https://infoweb.newsbank.com/apps/news/document-view?p=WORLDNEWS&t=&sort=\_rank\_%3AD&fld-base-0=alltext&maxresults=20&val-base-0=are%20adolescents%20beginning%20to%20abuse%20marijuana%20more%20than%20tobacco%20&docref=news/16E335BBF826EC78)
+=======
+**Sources** https://www.forbes.com/health/body/cannabis-legalization-by-state/ https://www.tobaccofreekids.org/press-releases/2022_01_13_state-report-fy2022
+>>>>>>> 47b1a496f8f3d64752fb605fd4c26efb5f51ddd5
 
 ------------------------------------------------------------------------
 
@@ -387,6 +400,7 @@ NC |>
 ```
 
 ```{r}
+#| label: rate
 NC |>
   ggplot(
     aes(x = Year, y = rate_mar_mon_12_17)
@@ -408,6 +422,7 @@ tot_tob_mon |>
 ```
 
 ```{r}
+#| label: geomline1
 NC |>
   ggplot(
     aes(x = Year, y = tot_tob_mon_12_17)
@@ -455,6 +470,8 @@ all_26 |>
 ```
 
 ```{r}
+#| label: geomline
+
 CO |>
   ggplot(
     aes(x = Year, y = rate_mar_26)
@@ -472,7 +489,7 @@ all_12_17 |>
   ggplot(
     aes(x = Year, y = Rates, color = Type)
   ) + 
-  geom_line()
+  geom_line() 
 ```
 
 ```{r}
@@ -499,4 +516,5 @@ all_26 |>
     aes(x = Year, y = Rates, color = Type)
   ) + 
   geom_line()
+
 ```
