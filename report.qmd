@@ -27,6 +27,10 @@ How has marijuana and tobacco usage changed from 2002 to 2018 in 18 - 25 year ol
 
 Our dataset contains alcohol, cigarette, cocaine, marijuana, and tobacco use statistics for all 50 states and the District of Columbia from 2002 - 2018, broken down into three age ranges: 12-17, 18-25, and 26+. The data comes from CORGIS: The Collection of Really Great, Interesting, Situated Datasets, and was originally stored in the Substance Abuse & Mental Health Data Archive (SAMHDA). The data was gathered from the annual National Survey on Drug Use and Health.
 
+There are 53 variables, including state, year, population for each age group and usage (totals and rates) of various drugs for each age group. The dataset includes 867 observations, representing 50 states and the District of Columbia for each year from 2002 to 2018. 
+
+It it important to consider the ethical concerns and biases that may be present in the collection of this data. Since our sample is a voluntary response sample, some data wouldn't be reported or reported accurately. 
+
 Given the increase in legalization of medical and recreational cannabis (Forbes) and the increase in tobacco prevention education (Tobacco Free Kids) in the past several decades, we wanted to explore to see if the marijuana usage has been increasing and tobacco usage has been decreasing among different age groups from 2002 to 2018. Our hypothesis is that states that legalized marijuana would experience a significant increase in marijuana usage over time. Through exploring the data, we hope to extract insights on potential causes or correlations with other variables in the data that affect trends in drug usage. There are both categorical and quantitative variables involved in our research question: the states in the data set are categorical while the totals and rates of tobacco and marijuana are quantitative.
 
 **Literature**
