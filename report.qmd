@@ -9,21 +9,21 @@ execute:
 
 **Research Question**
 
-How has marijuana and tobacco use changed from 2002 to 2018 for the 18-25 year old age group?
+How has marijuana and tobacco usage changed from 2002 to 2018 in 18 - 25 year olds in North Carolina and Colorado?
 
 **Introduction and data**
 
-- state your research question as a question-- make sure that your hypothesis actually addresses the questions you are asking.
+-   state your research question as a question-- make sure that your hypothesis actually addresses the questions you are asking.
 
-- introduce how many variables you have (and how many you are using), as well as how many observations you have (my guess is 51 per year for each year, but if that isn't the case then you should address that). 
+-   introduce how many variables you have (and how many you are using), as well as how many observations you have (my guess is 51 per year for each year, but if that isn't the case then you should address that).
 
-- expand on context
+-   expand on context
 
-- address any ethical concerns or biases in the data collection here (which may be that some data is not collected/reported/survey biases).
+-   address any ethical concerns or biases in the data collection here (which may be that some data is not collected/reported/survey biases).
 
-- literature review from your proposal, or other literature review
+-   literature review from your proposal, or other literature review
 
-- include footnotes or other citation for any sources you're using, including your literature review and your data set.
+-   include footnotes or other citation for any sources you're using, including your literature review and your data set.
 
 Our dataset contains alcohol, cigarette, cocaine, marijuana, and tobacco use statistics for all 50 states and the District of Columbia from 2002 - 2018, broken down into three age ranges: 12-17, 18-25, and 26+. The data comes from CORGIS: The Collection of Really Great, Interesting, Situated Datasets, and was originally stored in the Substance Abuse & Mental Health Data Archive (SAMHDA). The data was gathered from the annual National Survey on Drug Use and Health.
 
@@ -33,10 +33,9 @@ Given the increase in legalization of medical and recreational cannabis (Forbes)
 
 Your Guide To Cannabis Legalization By State-- Forbes
 
-With Cannabis as the most commonly used illicit drug in the US, Forbes Health created a guides that lays out the uses and legislation of marijuana across the US. While some states like Alabama, Florida, and Pennslyvania legalize medical use only, other states like Colorado, Washington, and New York legalized marijuana completely. There is a full range of legislation between illegal and legal depending on each state, and the legislation continues to change up until today. 
+With Cannabis as the most commonly used illicit drug in the US, Forbes Health created a guides that lays out the uses and legislation of marijuana across the US. While some states like Alabama, Florida, and Pennslyvania legalize medical use only, other states like Colorado, Washington, and New York legalized marijuana completely. There is a full range of legislation between illegal and legal depending on each state, and the legislation continues to change up until today.
 
-New Report: States Continue to Shortchange Tobacco Prevention Programs, But Several Show a Welcome Increase-- Tobacco-Free Kids
-Many states have increased funding for tobacco prevention programs. 
+New Report: States Continue to Shortchange Tobacco Prevention Programs, But Several Show a Welcome Increase-- Tobacco-Free Kids Many states have increased funding for tobacco prevention programs.
 
 More teens using marijuana with electronic smoking devices - Parent alert! Your kid may be vaping more than tobacco-- Forbes
 
@@ -44,11 +43,11 @@ This article explores the usage of vapes that contain THC. They look at the chan
 
 **Methodology**
 
-- change y-axes from rate to percentages (0-100%)
-- more modeling (linear model to see change over time in differnet states or regions)
-- hypothesis testing (is the mean rate of tobacco usage higher than marijuana usage in both 2002 and 2018 at a statistically significant level, or are the mean rates different for the different age groups)
-- for question about legal marijuana-- make a group of states which have legalized and a group o states which have not and look for statisitcally significant differences in the two groups
-- justify the methods used
+-   change y-axes from rate to percentages (0-100%)
+-   more modeling (linear model to see change over time in differnet states or regions)
+-   hypothesis testing (is the mean rate of tobacco usage higher than marijuana usage in both 2002 and 2018 at a statistically significant level, or are the mean rates different for the different age groups)
+-   for question about legal marijuana-- make a group of states which have legalized and a group o states which have not and look for statisitcally significant differences in the two groups
+-   justify the methods used
 
 ```{r}
 #| label: load_libraries
@@ -232,11 +231,11 @@ To analyze the research question of whether marijuana use has been increasing an
 
 **Results**
 
-- expand more on methodology
-- hypothesis testing
-- linear modeling and talk about trend lines
-- expand on overall summary sentence
-- add about limitations on research 
+-   expand more on methodology
+-   hypothesis testing
+-   linear modeling and talk about trend lines
+-   expand on overall summary sentence
+-   add about limitations on research
 
 Looking at the trends in past-month marijuana usage and past-month tobacco usage across the nation, the graph "Tobacco and Marijuana Used in the Past Month (18-25 year olds)" presents a generally steady increase in Marijuana usage rates from about 0.0017% in 2002 to 0.0226% in 2018. On the other hand, Tobacco usage rates decreased considerably from about 0.0450% in 2002 to 0.0251% in 2018. In both 2002 and 2018, there is a greater rate in tobacco than marijuana usage, but decrease in tobacco usage was much greater than the increase in marijuana usage.
 
@@ -244,7 +243,4 @@ Considering the possibility of increased legalization of marijuana affecting the
 
 Overall, we can see from 2002 to 2018, there is a general decrease in tobacco usage and increase in marijuana usage, especially in states where marijuana has been legalized.
 
-**Sources** 
-[Forbes- Your Guide To Cannabis Legalization By State](https://www.forbes.com/health/body/cannabis-legalization-by-state/) 
-[Tobacco-Free Kids- New Report: States Continue to Shortchange Tobacco Prevention Programs, But Several Show a Welcome Increase](https://www.tobaccofreekids.org/press-releases/2022_01_13_state-report-fy2022) [News-Bank- More teens using marijuana with electronic smoking devices - Parent alert! Your kid may be vaping more than tobacco](https://infoweb.newsbank.com/apps/news/document-view?p=WORLDNEWS&t=&sort=\_rank\_%3AD&fld-base-0=alltext&maxresults=20&val-base-0=are%20adolescents%20beginning%20to%20abuse%20marijuana%20more%20than%20tobacco%20&docref=news/16E335BBF826EC78)
-
+**Sources** [Forbes- Your Guide To Cannabis Legalization By State](https://www.forbes.com/health/body/cannabis-legalization-by-state/) [Tobacco-Free Kids- New Report: States Continue to Shortchange Tobacco Prevention Programs, But Several Show a Welcome Increase](https://www.tobaccofreekids.org/press-releases/2022_01_13_state-report-fy2022) [News-Bank- More teens using marijuana with electronic smoking devices - Parent alert! Your kid may be vaping more than tobacco](https://infoweb.newsbank.com/apps/news/document-view?p=WORLDNEWS&t=&sort=_rank_%3AD&fld-base-0=alltext&maxresults=20&val-base-0=are%20adolescents%20beginning%20to%20abuse%20marijuana%20more%20than%20tobacco%20&docref=news/16E335BBF826EC78)
