@@ -7,11 +7,23 @@ execute:
   echo: true
 ---
 
+TO DO
+- hypothesis test with regression models
+- expand on context
+- methodology- explain methods and what variables using (rate_tob is all tobacco, use 2012 as cut off, prob cite site where we saw hypothesis test), also nc?
+- include vaping thing into context
+- results- everything
+- marijuana usage today? prediction
+- is research question good?
+
+
+
 **Research Question**
 
 How has marijuana and tobacco usage changed from 2002 to 2018 in 18 - 25 year olds in North Carolina and Colorado?
 
 **Introduction and data**
+
 
 -   state your research question as a question-- make sure that your hypothesis actually addresses the questions you are asking.
 
@@ -197,6 +209,68 @@ CO_longer_18_25|>
   scale_y_continuous(labels = scales::percent)
 
 ```
+
+```{r}
+#| label: co_2012
+
+co_2012 <- CO_18_25 |>
+  filter(Year <= 2012) |>
+  mutate(Year = Year-2002)
+# year = year since 2002
+
+co_2018 <- CO_18_25 |>
+  filter(Year > 2012) |>
+  mutate(Year = Year- 2013)
+# year = year since 2013
+
+tob_2012 <-linear_reg() |>
+  set_engine("lm") |>
+  fit(Tobacco ~ Year, data = co_2012)
+
+tob_2018 <-linear_reg() |>
+  set_engine("lm") |>
+  fit(Tobacco ~ Year, data = co_2018)
+
+mar_2012 <-linear_reg() |>
+  set_engine("lm") |>
+  fit(Marijuana ~ Year, data = co_2012)
+
+mar_2018 <-linear_reg() |>
+  set_engine("lm") |>
+  fit(Marijuana ~ Year, data = co_2018)
+
+tidy(tob_2012)
+tidy(tob_2018)
+tidy(mar_2012)
+tidy(mar_2018)
+
+predict(tob_2018, data.frame(Year = 9))
+predict(mar_2018, data.frame(Year = 9))
+
+```
+
+4 linear regressions- marijuana pre-2012 and post-2012, tobacco pre-2012 and post 2012
+
+TOBACCO PRE-2012
+$tobacco = 0.000497 -0.00000740 * Year$
+
+TOBACCO POST-2012
+$tobacco = 0.000397 -0.0000267 * Year$
+
+MARIJUANA PRE-2012
+$marijuana = 0.000193 -0.00000900 * Year$
+
+MARIJUANA POST-2012
+$marijuana = 0.000310 -0.00000572 * Year$
+
+
+PREDICTIONS
+Tobacco: 0.000157
+Marijuana: 0.000361
+
+
+
+
 
 NC (only CBD with THC only legalized 2015):
 
