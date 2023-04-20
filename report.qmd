@@ -7,23 +7,13 @@ execute:
   echo: true
 ---
 
-TO DO
-- hypothesis test with regression models
-- expand on context
-- methodology- explain methods and what variables using (rate_tob is all tobacco, use 2012 as cut off, prob cite site where we saw hypothesis test), also nc?
-- include vaping thing into context
-- results- everything
-- marijuana usage today? prediction
-- is research question good?
-
-
+TO DO - hypothesis test with regression models - expand on context - methodology- explain methods and what variables using (rate_tob is all tobacco, use 2012 as cut off, prob cite site where we saw hypothesis test), also nc? - include vaping thing into context - results- everything - marijuana usage today? prediction - is research question good?
 
 **Research Question**
 
-How has marijuana and tobacco usage changed from 2002 to 2018 in 18 - 25 year olds in North Carolina and Colorado?
+How has the rate of marijuana and tobacco use changed from 2002 to 2018 in 18-25 year olds in North Carolina (where marijuana is illegal) and Colorado (where marijuana was legalized in 2013), and is there a significant difference between the two states?
 
 **Introduction and data**
-
 
 -   state your research question as a question-- make sure that your hypothesis actually addresses the questions you are asking.
 
@@ -39,11 +29,13 @@ How has marijuana and tobacco usage changed from 2002 to 2018 in 18 - 25 year ol
 
 Our dataset contains alcohol, cigarette, cocaine, marijuana, and tobacco use statistics for all 50 states and the District of Columbia from 2002 - 2018, broken down into three age ranges: 12-17, 18-25, and 26+. The data comes from CORGIS: The Collection of Really Great, Interesting, Situated Datasets, and was originally stored in the Substance Abuse & Mental Health Data Archive (SAMHDA). The data was gathered from the annual National Survey on Drug Use and Health.
 
-There are 53 variables, including state, year, population for each age group and usage (totals and rates) of various drugs for each age group. The dataset includes 867 observations, representing 50 states and the District of Columbia for each year from 2002 to 2018. 
+There are 53 variables, including state, year, population for each age group and usage (totals and rates) of various drugs for each age group. The dataset includes 867 observations, representing 50 states and the District of Columbia for each year from 2002 to 2018.
 
-It it important to consider the ethical concerns and biases that may be present in the collection of this data. Since our sample is a voluntary response sample, some data wouldn't be reported or reported accurately. 
+It it important to consider the ethical concerns and biases that may be present in the collection of this data. Since our sample is a voluntary response sample, some data wouldn't be reported or reported accurately.
 
-Given the increase in legalization of medical and recreational cannabis (Forbes) and the increase in tobacco prevention education (Tobacco Free Kids) in the past several decades, we wanted to explore to see if the marijuana usage has been increasing and tobacco usage has been decreasing among different age groups from 2002 to 2018. Our hypothesis is that states that legalized marijuana would experience a significant increase in marijuana usage over time. Through exploring the data, we hope to extract insights on potential causes or correlations with other variables in the data that affect trends in drug usage. There are both categorical and quantitative variables involved in our research question: the states in the data set are categorical while the totals and rates of tobacco and marijuana are quantitative.
+Given the increase in legalization of medical and recreational cannabis (Forbes) and the increase in tobacco prevention education (Tobacco Free Kids) in the past several decades, we wanted to explore to see if the marijuana usage has been increasing and tobacco usage has been decreasing among different age groups from 2002 to 2018.
+
+Our hypothesis is that Colorado, which legalized the recreational use of marijuana, would experience a more significant increase in marijuana usage over time when compared to North Carolina. Through exploring the data, we hope to extract insights on potential causes or correlations with other variables in the data that affect trends in drug usage. There are both categorical and quantitative variables involved in our research question: the states in the data set are categorical while the totals and rates of tobacco and marijuana are quantitative.
 
 **Literature**
 
@@ -146,6 +138,7 @@ new_drugs <- drugs |>
 
 ```{r}
 #| label: nation_18_25
+##do we need this??
 nation_18_25 <- new_drugs |>
   group_by(Year) |>
   summarize(Marijuana = sum(tot_mar_mon_18_25)/ sum(pop_18_25),
@@ -171,6 +164,7 @@ nation_longer_18_25|>
 ```
 
 ```{r}
+##what is this for
 nation_18_25 |>
   filter(Year %in% c(2002, 2018))
 ```
@@ -178,56 +172,56 @@ nation_18_25 |>
 Colorado (recreational legalized 2012):
 
 ```{r}
-
-#| label: filter_only_CO
+#| label: Colorado
 
 CO <- new_drugs |>
   filter(State == "Colorado")
+
 CO = subset(CO, select = -c(State))
 ```
 
+\
+
 ```{r}
-#| label: co_18_25
-CO_18_25 <- CO |>
-  group_by(Year) |>
-  summarize(Marijuana = tot_mar_mon_18_25/pop_18_25,
-            Tobacco = tot_tob_mon_18_25/pop_18_25)
+#| label: Colorado-18-25
 
-CO_longer_18_25 <- CO_18_25 |>
-  pivot_longer(cols = c('Marijuana','Tobacco' ), names_to = "Drug", values_to = "Rates") |>
-  select(c("Drug", "Rates", "Year"))
+CO_filter <- CO |>
+  select(c("Year", "rate_mar_18_25", "rate_tob_cig_mon_18_25")) |>
+  rename("Marijuana" = "rate_mar_18_25") |>
+  rename("Tobacco" = "rate_tob_cig_mon_18_25")
 
-CO_longer_18_25|>
-  ggplot(
-    aes(x = Year, y = Rates, color = Drug)
-  ) + 
-  geom_line() +
-  labs(
-    title = "Tobacco and Marijuana Usage Rates in CO",
-    subtitle = "18-25 year olds"
-  ) +
+
+CO_pivot <- CO_filter |>
+  pivot_longer(cols = c('Marijuana', 'Tobacco'),
+               names_to = "Drug", values_to = "Rates") 
+
+CO_pivot |>
+  ggplot(aes(x = Year, y = Rates, fill = Drug)) +
+  geom_line(aes(color = Drug)) +
+  labs(title = "Tobacco and Marijuana Usage Rates in CO", 
+       subtitle = "18-25 year olds") +
   scale_y_continuous(labels = scales::percent)
-
+  
 ```
 
 ```{r}
-#| label: co_2012
+#| label: linear-regression
 
-co_2012 <- CO_18_25 |>
+co_2012 <- CO_filter |>
   filter(Year <= 2012) |>
   mutate(Year = Year-2002)
 # year = year since 2002
 
-co_2018 <- CO_18_25 |>
+co_2018 <- CO_filter |>
   filter(Year > 2012) |>
   mutate(Year = Year- 2013)
 # year = year since 2013
 
-tob_2012 <-linear_reg() |>
+tob_2012 <- linear_reg() |>
   set_engine("lm") |>
   fit(Tobacco ~ Year, data = co_2012)
 
-tob_2018 <-linear_reg() |>
+tob_2018 <- linear_reg() |>
   set_engine("lm") |>
   fit(Tobacco ~ Year, data = co_2018)
 
@@ -251,56 +245,46 @@ predict(mar_2018, data.frame(Year = 9))
 
 4 linear regressions- marijuana pre-2012 and post-2012, tobacco pre-2012 and post 2012
 
-TOBACCO PRE-2012
-$tobacco = 0.000497 -0.00000740 * Year$
+**CHANGE BELOW**
 
-TOBACCO POST-2012
-$tobacco = 0.000397 -0.0000267 * Year$
+TOBACCO PRE-2012 $tobacco = 0.000497 -0.00000740 * Year$
 
-MARIJUANA PRE-2012
-$marijuana = 0.000193 -0.00000900 * Year$
+TOBACCO POST-2012 $tobacco = 0.000397 -0.0000267 * Year$
 
-MARIJUANA POST-2012
-$marijuana = 0.000310 -0.00000572 * Year$
+MARIJUANA PRE-2012 $marijuana = 0.000193 -0.00000900 * Year$
 
+MARIJUANA POST-2012 $marijuana = 0.000310 -0.00000572 * Year$
 
-PREDICTIONS
-Tobacco: 0.000157
-Marijuana: 0.000361
-
-
-
-
+PREDICTIONS Tobacco: 0.000157 Marijuana: 0.000361
 
 NC (only CBD with THC only legalized 2015):
 
 ```{r}
-#| label: filter_only_NC
+#| label: NC
+
 NC <- new_drugs |>
   filter(State == "North Carolina")
 NC = subset(NC, select = -c(State))
 ```
 
 ```{r}
-#| label:  c_18_25
-NC_18_25 <- NC |>
-  group_by(Year) |>
-  summarize(Marijuana = tot_mar_mon_18_25/pop_18_25,
-            Tobacco = tot_tob_mon_18_25/pop_18_25)
+#| label: NC-18-25
 
-NC_longer_18_25 <-NC_18_25 |>
-  pivot_longer(cols = c('Marijuana','Tobacco' ), names_to = "Drug", values_to = "Rates") |>
-  select(c("Drug", "Rates", "Year"))
+NC_filter <- NC |>
+  select(c("Year", "rate_mar_18_25", "rate_tob_cig_mon_18_25")) |>
+  rename("Marijuana" = "rate_mar_18_25") |>
+  rename("Tobacco" = "rate_tob_cig_mon_18_25")
 
-NC_longer_18_25|>
-  ggplot(
-    aes(x = Year, y = Rates, color = Drug)
-  ) + 
-  geom_line() +
-  labs(
-    title = "Tobacco and Marijuana Usage Rates NC",
-    subtitle = "18-25 year olds"
-  ) +
+
+NC_pivot <- NC_filter |>
+  pivot_longer(cols = c('Marijuana', 'Tobacco'),
+               names_to = "Drug", values_to = "Rates") 
+
+NC_pivot |>
+  ggplot(aes(x = Year, y = Rates, fill = Drug)) +
+  geom_line(aes(color = Drug)) +
+  labs(title = "Tobacco and Marijuana Usage Rates in NC", 
+       subtitle = "18-25 year olds") +
   scale_y_continuous(labels = scales::percent)
 
 ```
