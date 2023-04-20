@@ -9,7 +9,7 @@ execute:
 
 **Research Question**
 
-How has the rate of marijuana and tobacco use changed from 2002 to 2018 in 18-25 year olds in North Carolina (where marijuana is illegal) and Colorado (where marijuana was legalized in 2013), and is there a significant difference between the two states?
+How has the rate of marijuana and tobacco use changed from 2002 to 2018 in 18-25 year olds in North Carolina (where marijuana is illegal) and Colorado (where marijuana was legalized in 2013), and is there a significant difference between marijuana and tobacco use in the two states?
 
 **Introduction and data**
 
@@ -242,6 +242,30 @@ Hypothesis Tests
 -   colorado pre vs post legalization rate of tobacco
 
 -   colorado post legalization vs NC 2013 -\> marijuana
+
+```{r}
+#|: colorado-marijuana
+
+tidy(CO_mar_2012)
+tidy(CO_mar_2018)
+
+```
+
+```{r}
+#|: colorado-tobacco
+
+tidy(CO_tob_2012)
+tidy(CO_tob_2018)
+
+```
+
+```{r}
+#|: NC-vs-COL
+
+tidy(NC_mar_2018)
+tidy(CO_mar_2018)
+
+```
 
 The methodology section should include visualizations and summary statistics relevant to your research question. You should also justify the choice of statistical method(s) used to answer your research question.
 
