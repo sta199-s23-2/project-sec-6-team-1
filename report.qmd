@@ -180,7 +180,6 @@ CO <- new_drugs |>
 CO = subset(CO, select = -c(State))
 ```
 
-\
 
 ```{r}
 #| label: Colorado-18-25
@@ -326,9 +325,8 @@ model4 <- linear_reg() |>
 ```
 
 The methodology section should include visualizations and summary statistics relevant to your research question. You should also justify the choice of statistical method(s) used to answer your research question.
-=======
+
 To analyze the research question of whether marijuana use has been increasing and tobacco use has been decreasing among from 2002 to 2018, we graphed their usage rates over time to examine potential trends. In addition, we looked at states where marijuana was legalized (Colorado) compared to others where it has not been legalized (North Carolina) to observe any potential differences this caused.
->>>>>>> fc44927f0901d34e0bf73f29d997801b5b911971
 
 **Results**
 
