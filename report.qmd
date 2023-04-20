@@ -7,8 +7,6 @@ execute:
   echo: true
 ---
 
-TO DO - hypothesis test with regression models - expand on context - methodology- explain methods and what variables using (rate_tob is all tobacco, use 2012 as cut off, prob cite site where we saw hypothesis test), also nc? - include vaping thing into context - results- everything - marijuana usage today? prediction - is research question good?
-
 **Research Question**
 
 How has the rate of marijuana and tobacco use changed from 2002 to 2018 in 18-25 year olds in North Carolina (where marijuana is illegal) and Colorado (where marijuana was legalized in 2013), and is there a significant difference between the two states?
@@ -76,63 +74,8 @@ drugs <- read_csv("data/drugs.csv")
 #| label: rename_columns
 
 new_drugs <- drugs |>
-  rename("pop_12_17" = "Population.12-17") |>
-  rename("pop_18_25" = "Population.18-25") |>
-  rename("pop_26" = "Population.26+") |>
-  rename("tot_alc_dis_yr_12_17" = "Totals.Alcohol.Use Disorder Past Year.12-17") |>
-  rename("tot_alc_dis_yr_18_25" = "Totals.Alcohol.Use Disorder Past Year.18-25") |>
-  rename("tot_alc_dis_yr_26" = "Totals.Alcohol.Use Disorder Past Year.26+") |>
-  rename("rate_alc_dis_yr_12_17" = "Rates.Alcohol.Use Disorder Past Year.12-17") |>
-  rename("rate_alc_dis_yr_18_25" = "Rates.Alcohol.Use Disorder Past Year.18-25") |>
-  rename("rate_alc_dis_yr_26" = "Rates.Alcohol.Use Disorder Past Year.26+") |>
-  rename("tot_alc_mon_12_17" = "Totals.Alcohol.Use Past Month.12-17") |>
-  rename("tot_alc_mon_18_25" = "Totals.Alcohol.Use Past Month.18-25") |>
-  rename("tot_alc_mon_26" = "Totals.Alcohol.Use Past Month.26+") |>
-  rename("rate_alc_mon_12_17" = "Rates.Alcohol.Use Past Month.12-17") |>
-  rename("rate_alc_mon_18_25" = "Rates.Alcohol.Use Past Month.18-25") |>
-  rename("rate_alc_mon_26" = "Rates.Alcohol.Use Past Month.26+") |>
-  
-  rename("tot_tob_cig_mon_12_17" = "Totals.Tobacco.Cigarette Past Month.12-17") |>
-  rename("tot_tob_cig_mon_18_25" = "Totals.Tobacco.Cigarette Past Month.18-25") |>
-  rename("tot_tob_cig_mon_26" = "Totals.Tobacco.Cigarette Past Month.26+") |>
-  rename("rate_tob_cig_mon_12_17" = "Rates.Tobacco.Cigarette Past Month.12-17") |>
-  rename("rate_tob_cig_mon_18_25" = "Rates.Tobacco.Cigarette Past Month.18-25") |>
-  rename("rate_tob_cig_mon_26" = "Rates.Tobacco.Cigarette Past Month.26+") |>
-  
-  rename("tot_coc_12_17" = "Totals.Illicit Drugs.Cocaine Used Past Year.12-17") |>
-  rename("tot_coc_18_25" = "Totals.Illicit Drugs.Cocaine Used Past Year.18-25") |>
-  rename("tot_coc_26" = "Totals.Illicit Drugs.Cocaine Used Past Year.26+") |>
-  rename("rate_coc_12_17" = "Rates.Illicit Drugs.Cocaine Used Past Year.12-17") |>
-  rename("rate_coc_18_25" = "Rates.Illicit Drugs.Cocaine Used Past Year.18-25") |>
-  rename("rate_coc_26" = "Rates.Illicit Drugs.Cocaine Used Past Year.26+") |>
-  
-  rename("tot_mar_12_17" = "Totals.Marijuana.New Users.12-17") |>
-  rename("tot_mar_18_25" = "Totals.Marijuana.New Users.18-25") |>
-  rename("tot_mar_26" = "Totals.Marijuana.New Users.26+") |>
-  rename("rate_mar_12_17" = "Rates.Marijuana.New Users.12-17") |>
-  rename("rate_mar_18_25" = "Rates.Marijuana.New Users.18-25") |>
-  rename("rate_mar_26" = "Rates.Marijuana.New Users.26+") |>
-  
-  rename("tot_mar_mon_12_17" = "Totals.Marijuana.Used Past Month.12-17") |>
-  rename("tot_mar_mon_18_25" = "Totals.Marijuana.Used Past Month.18-25") |>
-  rename("tot_mar_mon_26" = "Totals.Marijuana.Used Past Month.26+") |>
-  rename("rate_mar_mon_12_17" = "Rates.Marijuana.Used Past Month.12-17") |>
-  rename("rate_mar_mon_18_25" = "Rates.Marijuana.Used Past Month.18-25") |>
-  rename("rate_mar_mon_26" = "Rates.Marijuana.Used Past Month.26+") |>
-
-  rename("tot_mar_yr_12_17" = "Totals.Marijuana.Used Past Year.12-17") |>
-  rename("tot_mar_yr_18_25" = "Totals.Marijuana.Used Past Year.18-25") |>
-  rename("tot_mar_yr_26" = "Totals.Marijuana.Used Past Year.26+") |>
-  rename("rate_mar_yr_12_17" = "Rates.Marijuana.Used Past Year.12-17") |>
-  rename("rate_mar_yr_18_25" = "Rates.Marijuana.Used Past Year.18-25") |>
-  rename("rate_mar_yr_26" = "Rates.Marijuana.Used Past Year.26+") |>
-
-  rename("tot_tob_mon_12_17" = "Totals.Tobacco.Use Past Month.12-17") |>
-  rename("tot_tob_mon_18_25" = "Totals.Tobacco.Use Past Month.18-25") |>
-  rename("tot_tob_mon_26" = "Totals.Tobacco.Use Past Month.26+") |>
-  rename("rate_tob_mon_12_17" = "Rates.Tobacco.Use Past Month.12-17") |>
-  rename("rate_tob_mon_18_25" = "Rates.Tobacco.Use Past Month.18-25") |>
-  rename("rate_tob_mon_26" = "Rates.Tobacco.Use Past Month.26+")
+    rename("rate_tob_cig_mon_18_25" = "Rates.Tobacco.Cigarette Past Month.18-25") |>
+    rename("rate_mar_yr_18_25" = "Rates.Marijuana.Used Past Year.18-25")
   
 ```
 
