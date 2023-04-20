@@ -169,7 +169,7 @@ nation_18_25 |>
   filter(Year %in% c(2002, 2018))
 ```
 
-Colorado (recreational legalized 2012):
+Colorado (recreational marijuana legalized 2012):
 
 ```{r}
 #| label: Colorado
@@ -179,7 +179,6 @@ CO <- new_drugs |>
 
 CO = subset(CO, select = -c(State))
 ```
-
 
 ```{r}
 #| label: Colorado-18-25
@@ -216,26 +215,26 @@ co_2018 <- CO_filter |>
   mutate(Year = Year- 2013)
 # year = year since 2013
 
-tob_2012 <- linear_reg() |>
+CO_tob_2012 <- linear_reg() |>
   set_engine("lm") |>
   fit(Tobacco ~ Year, data = co_2012)
 
-tob_2018 <- linear_reg() |>
+CO_tob_2018 <- linear_reg() |>
   set_engine("lm") |>
   fit(Tobacco ~ Year, data = co_2018)
 
-mar_2012 <-linear_reg() |>
+CO_mar_2012 <- linear_reg() |>
   set_engine("lm") |>
   fit(Marijuana ~ Year, data = co_2012)
 
-mar_2018 <-linear_reg() |>
+CO_mar_2018 <- linear_reg() |>
   set_engine("lm") |>
   fit(Marijuana ~ Year, data = co_2018)
 
-tidy(tob_2012)
-tidy(tob_2018)
-tidy(mar_2012)
-tidy(mar_2018)
+tidy(CO_tob_2012)
+tidy(CO_tob_2018)
+tidy(CO_mar_2012)
+tidy(CO_mar_2018)
 
 predict(tob_2018, data.frame(Year = 9))
 predict(mar_2018, data.frame(Year = 9))
@@ -287,40 +286,37 @@ NC_pivot |>
 
 ```
 
-
 ```{r}
+#|: linear-regression-NC
 
-model1 <- linear_reg() |>
+NC_2012 <- NC_filter |>
+  filter(Year <= 2012) |>
+  mutate(Year = Year-2002)
+
+NC_2018 <- NC_filter |>
+  filter(Year > 2012) |>
+  mutate(Year = Year- 2013)
+
+NC_tob_2012 <- linear_reg() |>
   set_engine("lm") |>
-  fit(Rates ~ Drug, data = NC_longer_18_25)
+  fit(Tobacco ~ Year, data = NC_2012)
 
-  predict(model1, data.frame(drugs, Drug = "Marijuana"))
-
-  glance(model1)$adj.r.squared
-  
-  model2 <- linear_reg() |>
+NC_tob_2018 <- linear_reg() |>
   set_engine("lm") |>
-  fit(Rates ~ Drug, data = NC_longer_18_25)
+  fit(Tobacco ~ Year, data = NC_2018)
 
-  predict(model2, data.frame(drugs, Drug = "Tobacco"))
-
-```
-
-```{r}
-
-model3 <- linear_reg() |>
+NC_mar_2012 <- linear_reg() |>
   set_engine("lm") |>
-  fit(Rates ~ Drug, data = CO_longer_18_25)
+  fit(Marijuana ~ Year, data = NC_2012)
 
-  predict(model3, data.frame(drugs, Drug = "Marijuana"))
-
-  glance(model3)$adj.r.squared
-  
-model4 <- linear_reg() |>
+NC_mar_2018 <- linear_reg() |>
   set_engine("lm") |>
-  fit(Rates ~ Drug, data = CO_longer_18_25)
+  fit(Marijuana ~ Year, data = NC_2018)
 
-  predict(model4, data.frame(drugs, Drug = "Tobacco"))
+tidy(NC_tob_2012)
+tidy(NC_tob_2018)
+tidy(NC_mar_2012)
+tidy(NC_mar_2018)
 
 ```
 
