@@ -68,48 +68,20 @@ library(ggplot2)
 
 drugs <- read_csv("data/drugs.csv")
 
+drugs_temp <- drugs |>
+  filter(State == "Colorado") |> 
+  select("Rates.Marijuana.Used Past Month.18-25", "Rates.Marijuana.Used Past Year.18-25")
+
 ```
 
 ```{r}
 #| label: rename_columns
 
 new_drugs <- drugs |>
-    rename("rate_tob_cig_mon_18_25" = "Rates.Tobacco.Cigarette Past Month.18-25") |>
-    rename("rate_mar_yr_18_25" = "Rates.Marijuana.Used Past Year.18-25")
+    rename("rate_tob_cig_18_25" = "Rates.Tobacco.Cigarette Past Month.18-25") |>
+    rename("rate_mar_18_25" = "Rates.Marijuana.Used Past Month.18-25") |>
+    select("State", "Year", "rate_tob_cig_18_25", "rate_mar_18_25")
   
-```
-
-```{r}
-#| label: nation_18_25
-##do we need this??
-nation_18_25 <- new_drugs |>
-  group_by(Year) |>
-  summarize(Marijuana = sum(tot_mar_mon_18_25)/ sum(pop_18_25),
-            Tobacco = sum(tot_tob_mon_18_25)/ sum(pop_18_25))
-
-nation_longer_18_25 <- nation_18_25 |>
-  pivot_longer(cols = c('Marijuana','Tobacco' ), 
-               names_to = "Drug", 
-               values_to = "Rates") |>
-  select(c("Drug", "Rates", "Year"))
-
-nation_longer_18_25|>
-  ggplot(
-    aes(x = Year, y = Rates, color = Drug)
-  ) + 
-  geom_line() +
-  labs(
-    title = "Tobacco and Marijuana Usage Rates",
-    subtitle = "18-25 year olds"
-  ) +
-  scale_y_continuous(labels = scales::percent)
-
-```
-
-```{r}
-##what is this for
-nation_18_25 |>
-  filter(Year %in% c(2002, 2018))
 ```
 
 Colorado (recreational marijuana legalized 2012):
@@ -127,9 +99,9 @@ CO = subset(CO, select = -c(State))
 #| label: Colorado-18-25
 
 CO_filter <- CO |>
-  select(c("Year", "rate_mar_18_25", "rate_tob_cig_mon_18_25")) |>
+  select(c("Year", "rate_mar_18_25", "rate_tob_cig_18_25")) |>
   rename("Marijuana" = "rate_mar_18_25") |>
-  rename("Tobacco" = "rate_tob_cig_mon_18_25")
+  rename("Tobacco" = "rate_tob_cig_18_25")
 
 
 CO_pivot <- CO_filter |>
@@ -212,9 +184,9 @@ NC = subset(NC, select = -c(State))
 #| label: NC-18-25
 
 NC_filter <- NC |>
-  select(c("Year", "rate_mar_18_25", "rate_tob_cig_mon_18_25")) |>
+  select(c("Year", "rate_mar_18_25", "rate_tob_cig_18_25")) |>
   rename("Marijuana" = "rate_mar_18_25") |>
-  rename("Tobacco" = "rate_tob_cig_mon_18_25")
+  rename("Tobacco" = "rate_tob_cig_18_25")
 
 NC_pivot <- NC_filter |>
   pivot_longer(cols = c('Marijuana', 'Tobacco'),
@@ -262,6 +234,14 @@ tidy(NC_mar_2012)
 tidy(NC_mar_2018)
 
 ```
+
+Hypothesis Tests
+
+-   colorado pre vs post legalization rate of marijuana
+
+-   colorado pre vs post legalization rate of tobacco
+
+-   colorado post legalization vs NC 2013 -\> marijuana
 
 The methodology section should include visualizations and summary statistics relevant to your research question. You should also justify the choice of statistical method(s) used to answer your research question.
 
