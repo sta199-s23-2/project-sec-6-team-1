@@ -184,9 +184,46 @@ NC_longer_18_25|>
   ) + 
   geom_line() +
   labs(
-    title = "Tobacco and Marijuana Used in the Past Month in NC (18-25 year olds)"
+    title = "Tobacco and Marijuana Used in the Past Month",
+    subtitle = "In NC (18-25 year olds)"
   ) +
   scale_y_continuous(labels = scales::percent)
+
+```
+
+```{r}
+
+model1 <- linear_reg() |>
+  set_engine("lm") |>
+  fit(Rates ~ Drug, data = NC_longer_18_25)
+
+  predict(model1, data.frame(drugs, Drug = "Marijuana"))
+
+  glance(model1)$adj.r.squared
+  
+  model2 <- linear_reg() |>
+  set_engine("lm") |>
+  fit(Rates ~ Drug, data = NC_longer_18_25)
+
+  predict(model2, data.frame(drugs, Drug = "Tobacco"))
+
+```
+
+```{r}
+
+model3 <- linear_reg() |>
+  set_engine("lm") |>
+  fit(Rates ~ Drug, data = CO_longer_18_25)
+
+  predict(model3, data.frame(drugs, Drug = "Marijuana"))
+
+  glance(model3)$adj.r.squared
+  
+model4 <- linear_reg() |>
+  set_engine("lm") |>
+  fit(Rates ~ Drug, data = CO_longer_18_25)
+
+  predict(model4, data.frame(drugs, Drug = "Tobacco"))
 
 ```
 
