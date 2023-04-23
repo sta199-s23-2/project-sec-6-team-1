@@ -357,7 +357,7 @@ tidy(int_model_tob)
 
 -   neither add or int model had statistically significant p values
 
--   means that neither coefficient or constant is different
+-   means that we fail to reject null hypothesis: neither coefficient or constant is different
 
 The methodology section should include visualizations and summary statistics relevant to your research question. You should also justify the choice of statistical method(s) used to answer your research question.
 
