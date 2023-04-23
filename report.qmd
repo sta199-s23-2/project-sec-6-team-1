@@ -111,7 +111,7 @@ CO_pivot <- CO_filter |>
 CO_pivot |>
   ggplot(aes(x = Year, y = Rates, fill = Drug)) +
   geom_line(aes(color = Drug)) +
-  labs(title = "Tobacco and Marijuana Usage Rates in CO", 
+  labs(title = "Tobacco and Marijuana Usage Rates in Colorado, 2002 - 2018", 
        subtitle = "18-25 year olds") +
   scale_y_continuous(labels = scales::percent)
   
@@ -120,15 +120,15 @@ CO_pivot |>
 ```{r}
 #| label: linear-regression
 
+##should split this up
+
 co_2012 <- CO_filter |>
   filter(Year <= 2012) |>
   mutate(Year = Year-2002)
-# year = year since 2002
 
 co_2018 <- CO_filter |>
   filter(Year > 2012) |>
   mutate(Year = Year- 2013)
-# year = year since 2013
 
 CO_tob_2012 <- linear_reg() |>
   set_engine("lm") |>
@@ -151,24 +151,34 @@ tidy(CO_tob_2018)
 tidy(CO_mar_2012)
 tidy(CO_mar_2018)
 
-predict(tob_2018, data.frame(Year = 9))
-predict(mar_2018, data.frame(Year = 9))
+predict(CO_tob_2018, data.frame(Year = 9))
+predict(CO_mar_2018, data.frame(Year = 9))
 
 ```
 
-4 linear regressions- marijuana pre-2012 and post-2012, tobacco pre-2012 and post 2012
+**Regression equations (need to edit)**
 
-**CHANGE BELOW**
+`Tobacco usage pre-marijuana legalization (2002 - 2012):`
 
-TOBACCO PRE-2012 $tobacco = 0.000497 -0.00000740 * Year$
+$tobacco\_usage\_rate = 0.4456 - 0.0113 * Year$
 
-TOBACCO POST-2012 $tobacco = 0.000397 -0.0000267 * Year$
+$Year$ = years since 2002
 
-MARIJUANA PRE-2012 $marijuana = 0.000193 -0.00000900 * Year$
+`Tobacco usage post-marijuana legalization (2013 - 2018):`
 
-MARIJUANA POST-2012 $marijuana = 0.000310 -0.00000572 * Year$
+$tobacco\_usage\_rate = 0.3201 - 0.0237 * Year$
 
-PREDICTIONS Tobacco: 0.000157 Marijuana: 0.000361
+$Year$ = years since 2013
+
+`Marijuana usage before legalization (2002 - 2012):`
+
+$marijuana = 0.1924 + 0.0090 * Year$
+
+`Marijuana usage after legalization (2013 - 2018):`
+
+$marijuana = 0.3101 + 0.0056 * Year$
+
+`PREDICTIONS`
 
 NC (only CBD with THC only legalized 2015):
 
@@ -247,8 +257,24 @@ Hypothesis Tests
 #|: colorado-marijuana
 
 tidy(CO_mar_2012)
+# CO_mar_pre <- tidy(CO_mar_2012) |>
+#   filter(term == "Year") |>
+#   pull(estimate)
+#   
 tidy(CO_mar_2018)
+# CO_mar_post <- tidy(CO_mar_2018) |>
+#   filter(term == "Year") |>
+#   pull(estimate)
 
+CO_marijuana <- CO_filter |>
+  select(Year, Marijuana) |>
+  mutate(Legalized = if_else(Year < 2013, "No", "Yes"))
+
+int_model <- linear_reg() |>
+  set_engine("lm") |>
+  fit(Marijuana ~ Year * Legalized, data = CO_marijuana)
+
+tidy(int_model)
 ```
 
 ```{r}
@@ -260,12 +286,78 @@ tidy(CO_tob_2018)
 ```
 
 ```{r}
-#|: NC-vs-COL
+#|: NC-vs-CO-marijuana
 
 tidy(NC_mar_2018)
 tidy(CO_mar_2018)
 
+CO_filter <- CO_filter |>
+  mutate(State = "Colorado")
+
+NC_filter <- NC_filter |>
+  mutate(State = "North Carolina")
+
+combined <- full_join(CO_filter, NC_filter) |>
+  filter(Year > 2012) |>
+  mutate(yrs_since_legal = Year - 2013)
+
+combined |>
+  ggplot(aes(x = yrs_since_legal, y = Marijuana, color = State)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+
+add_model_mar <- linear_reg() |>
+  set_engine("lm") |>
+  fit(Marijuana ~ yrs_since_legal + State, data = combined)
+tidy(add_model_mar)
+
+int_model_mar <- linear_reg() |>
+  set_engine("lm") |>
+  fit(Marijuana ~ yrs_since_legal * State, data = combined)
+tidy(int_model_mar)
 ```
+
+add model:
+
+CO: 0.312 + 0.005 \* year
+
+NC: 0.176 + 0.005 \* year
+
+statistically significant (low p value) constant term
+
+int model:
+
+CO: 0.310 + 0.006 \* year
+
+NC: 0.177 + 0.005 \* year
+
+high p value (0.7), coefficient not statistically significant
+
+```{r}
+#|: NC-vs-CO-tobacco
+
+tidy(NC_tob_2018)
+tidy(CO_tob_2018)
+
+combined |>
+  ggplot(aes(x = yrs_since_legal, y = Tobacco, color = State)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+
+add_model_tob <- linear_reg() |>
+  set_engine("lm") |>
+  fit(Tobacco ~ yrs_since_legal + State, data = combined)
+tidy(add_model_tob)
+
+int_model_tob <- linear_reg() |>
+  set_engine("lm") |>
+  fit(Tobacco ~ yrs_since_legal * State, data = combined)
+tidy(int_model_tob)
+```
+
+-   neither add or int model had statistically significant p values
+
+-   means that neither coefficient or constant is different
 
 The methodology section should include visualizations and summary statistics relevant to your research question. You should also justify the choice of statistical method(s) used to answer your research question.
 
