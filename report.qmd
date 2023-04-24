@@ -258,9 +258,9 @@ tidy(int_model_mar)
 
 **Regression equation:**
 
-CO: 0.310 + 0.0056 \* yrs_since_legal
+CO: $0.310 + 0.0056 * yrs\_since\_legal$
 
-NC: 0.177 + 0.0056 \* yrs_since_legal
+NC: $0.177 + 0.0056 * yrs\_since\_legal$
 
 p value of interaction between explanatory variable (yrs_since_legal) and category (state: NC/CO): 0.73
 
@@ -309,9 +309,9 @@ tidy(int_model_tob)
 
 **Regression equation:**
 
-CO: 0.3201 - 0.0237 \* yrs_since_legal
+CO: $0.3201 - 0.0237 * yrs\_since\_legal$
 
-NC: 0.3070 - 0.0193 \* yrs_since_legal
+NC: $0.3070 - 0.0193 * yrs\_since\_legal$
 
 p value of interaction between explanatory variable (yrs_since_legal) and category (state: NC/CO): 0.4
 
