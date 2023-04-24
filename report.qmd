@@ -68,51 +68,42 @@ library(ggplot2)
 
 drugs <- read_csv("data/drugs.csv")
 
-drugs_temp <- drugs |>
-  filter(State == "Colorado") |> 
-  select("Rates.Marijuana.Used Past Month.18-25", "Rates.Marijuana.Used Past Year.18-25")
-
 ```
 
 ```{r}
 #| label: rename_columns
 
 new_drugs <- drugs |>
-    rename("rate_tob_cig_18_25" = "Rates.Tobacco.Cigarette Past Month.18-25") |>
-    rename("rate_mar_18_25" = "Rates.Marijuana.Used Past Month.18-25") |>
-    select("State", "Year", "rate_tob_cig_18_25", "rate_mar_18_25")
+  rename("Tobacco" = "Rates.Tobacco.Cigarette Past Month.18-25") |>
+  rename("Marijuana" = "Rates.Marijuana.Used Past Month.18-25") |>
+  select("State", "Year", "Tobacco", "Marijuana") |>
+  filter(Year > 2012)
+  
   
 ```
 
 Colorado (recreational marijuana legalized 2012):
 
 ```{r}
-#| label: Colorado
+#| label: Colorado-EDA
 
-CO <- new_drugs |>
-  filter(State == "Colorado")
-
-CO = subset(CO, select = -c(State))
-```
-
-```{r}
-#| label: Colorado-18-25
-
-CO_filter <- CO |>
-  select(c("Year", "rate_mar_18_25", "rate_tob_cig_18_25")) |>
-  rename("Marijuana" = "rate_mar_18_25") |>
-  rename("Tobacco" = "rate_tob_cig_18_25")
+Colorado <- new_drugs |>
+  filter(State == "Colorado") |>
+  select(c("Year", "Marijuana", "Tobacco", "State"))
+  # rename("Marijuana" = "rate_mar_18_25") |>
+  # rename("Tobacco" = "rate_tob_cig_18_25")
 
 
-CO_pivot <- CO_filter |>
+CO_pivot <- Colorado |>
   pivot_longer(cols = c('Marijuana', 'Tobacco'),
                names_to = "Drug", values_to = "Rates") 
 
 CO_pivot |>
   ggplot(aes(x = Year, y = Rates, fill = Drug)) +
   geom_line(aes(color = Drug)) +
-  labs(title = "Tobacco and Marijuana Usage Rates in Colorado, 2002 - 2018", 
-       subtitle = "18-25 year olds") +
+  labs(title = "Tobacco and Marijuana Usage Rates in Colorado, 2013 - 2018", 
+       subtitle = "18-25 year olds", y = "% of population using",
+       caption = "SOURCE OF DATA HERE") +
   scale_y_continuous(labels = scales::percent)
   
 ```
@@ -120,93 +111,67 @@ CO_pivot |>
 ```{r}
 #| label: linear-regression
 
-##should split this up
+Colorado <- Colorado |>
+  mutate(yrs_since_legal = Year - 2013)
 
-co_2012 <- CO_filter |>
-  filter(Year <= 2012) |>
-  mutate(Year = Year-2002)
-
-co_2018 <- CO_filter |>
-  filter(Year > 2012) |>
-  mutate(Year = Year- 2013)
-
-CO_tob_2012 <- linear_reg() |>
+CO_tob <- linear_reg() |>
   set_engine("lm") |>
-  fit(Tobacco ~ Year, data = co_2012)
+  fit(Tobacco ~ yrs_since_legal, data = Colorado)
 
-CO_tob_2018 <- linear_reg() |>
+tidy(CO_tob)
+
+CO_mar <- linear_reg() |>
   set_engine("lm") |>
-  fit(Tobacco ~ Year, data = co_2018)
+  fit(Marijuana ~ yrs_since_legal, data = Colorado)
 
-CO_mar_2012 <- linear_reg() |>
-  set_engine("lm") |>
-  fit(Marijuana ~ Year, data = co_2012)
+tidy(CO_mar)
 
-CO_mar_2018 <- linear_reg() |>
-  set_engine("lm") |>
-  fit(Marijuana ~ Year, data = co_2018)
+```
 
-tidy(CO_tob_2012)
-tidy(CO_tob_2018)
-tidy(CO_mar_2012)
-tidy(CO_mar_2018)
+**Regression Equations:**
+
+`Tobacco usage in Colorado after marijuana legalization (2013 - 2018):`
+
+$CO\_tobacco\_usage\_rate = 0.3201 - 0.0237 * year$
+
+$year$ = number of years since 2013
+
+`Marijuana usage in Colorado after legalization (2013 - 2018):`
+
+$CO\_marijuana\_usage\_rate = 0.3101 + 0.0056 * year$
+
+$year$ = number of years since 2013
+
+```{r}
+#|: Predictions
 
 predict(CO_tob_2018, data.frame(Year = 9))
 predict(CO_mar_2018, data.frame(Year = 9))
-
 ```
 
-**Regression equations (need to edit)**
+**Predictions:**
 
-`Tobacco usage pre-marijuana legalization (2002 - 2012):`
+Predicted % of Coloradan's using tobacco in 2023: 10.69%
 
-$tobacco\_usage\_rate = 0.4456 - 0.0113 * Year$
-
-$Year$ = years since 2002
-
-`Tobacco usage post-marijuana legalization (2013 - 2018):`
-
-$tobacco\_usage\_rate = 0.3201 - 0.0237 * Year$
-
-$Year$ = years since 2013
-
-`Marijuana usage before legalization (2002 - 2012):`
-
-$marijuana = 0.1924 + 0.0090 * Year$
-
-`Marijuana usage after legalization (2013 - 2018):`
-
-$marijuana = 0.3101 + 0.0056 * Year$
-
-`PREDICTIONS`
-
-NC (only CBD with THC only legalized 2015):
+Predicted % of Coloradan's using marijuana in 2023: 36.07%
 
 ```{r}
-#| label: NC
+#| label: NC-EDA
 
 NC <- new_drugs |>
-  filter(State == "North Carolina")
-NC = subset(NC, select = -c(State))
-```
+  filter(State == "North Carolina") |>
+  select(c("Year", "Marijuana", "Tobacco", "State"))
 
-```{r}
-#| label: NC-18-25
-
-NC_filter <- NC |>
-  select(c("Year", "rate_mar_18_25", "rate_tob_cig_18_25")) |>
-  rename("Marijuana" = "rate_mar_18_25") |>
-  rename("Tobacco" = "rate_tob_cig_18_25")
-
-NC_pivot <- NC_filter |>
+NC_pivot <- NC |>
   pivot_longer(cols = c('Marijuana', 'Tobacco'),
                names_to = "Drug", values_to = "Rates") 
 
 NC_pivot |>
   ggplot(aes(x = Year, y = Rates, fill = Drug)) +
   geom_line(aes(color = Drug)) +
-  labs(title = "Tobacco and Marijuana Usage Rates in NC", 
-       subtitle = "18-25 year olds") +
+  labs(title = "Tobacco and Marijuana Usage Rates in NC, 2013 - 2018", 
+       subtitle = "18-25 year olds", y = "% of population using",
+       caption = "SOURCE OF DATA HERE") +
   scale_y_continuous(labels = scales::percent)
 
 ```
@@ -214,154 +179,127 @@ NC_pivot |>
 ```{r}
 #|: linear-regression-NC
 
-NC_2012 <- NC_filter |>
-  filter(Year <= 2012) |>
-  mutate(Year = Year-2002)
-
-NC_2018 <- NC_filter |>
-  filter(Year > 2012) |>
-  mutate(Year = Year- 2013)
-
-NC_tob_2012 <- linear_reg() |>
-  set_engine("lm") |>
-  fit(Tobacco ~ Year, data = NC_2012)
-
-NC_tob_2018 <- linear_reg() |>
-  set_engine("lm") |>
-  fit(Tobacco ~ Year, data = NC_2018)
-
-NC_mar_2012 <- linear_reg() |>
-  set_engine("lm") |>
-  fit(Marijuana ~ Year, data = NC_2012)
-
-NC_mar_2018 <- linear_reg() |>
-  set_engine("lm") |>
-  fit(Marijuana ~ Year, data = NC_2018)
-
-tidy(NC_tob_2012)
-tidy(NC_tob_2018)
-tidy(NC_mar_2012)
-tidy(NC_mar_2018)
-
-```
-
-Hypothesis Tests
-
--   colorado pre vs post legalization rate of marijuana
-
--   colorado pre vs post legalization rate of tobacco
-
--   colorado post legalization vs NC 2013 -\> marijuana
-
-```{r}
-#|: colorado-marijuana
-
-tidy(CO_mar_2012)
-# CO_mar_pre <- tidy(CO_mar_2012) |>
-#   filter(term == "Year") |>
-#   pull(estimate)
-#   
-tidy(CO_mar_2018)
-# CO_mar_post <- tidy(CO_mar_2018) |>
-#   filter(term == "Year") |>
-#   pull(estimate)
-
-CO_marijuana <- CO_filter |>
-  select(Year, Marijuana) |>
-  mutate(Legalized = if_else(Year < 2013, "No", "Yes"))
-
-int_model <- linear_reg() |>
-  set_engine("lm") |>
-  fit(Marijuana ~ Year * Legalized, data = CO_marijuana)
-
-tidy(int_model)
-```
-
-```{r}
-#|: colorado-tobacco
-
-tidy(CO_tob_2012)
-tidy(CO_tob_2018)
-
-```
-
-```{r}
-#|: NC-vs-CO-marijuana
-
-tidy(NC_mar_2018)
-tidy(CO_mar_2018)
-
-CO_filter <- CO_filter |>
-  mutate(State = "Colorado")
-
-NC_filter <- NC_filter |>
-  mutate(State = "North Carolina")
-
-combined <- full_join(CO_filter, NC_filter) |>
-  filter(Year > 2012) |>
+NC <- NC |>
   mutate(yrs_since_legal = Year - 2013)
+
+NC_tob <- linear_reg() |>
+  set_engine("lm") |>
+  fit(Tobacco ~ yrs_since_legal, data = NC)
+
+tidy(NC_tob)
+
+NC_mar <- linear_reg() |>
+  set_engine("lm") |>
+  fit(Marijuana ~ yrs_since_legal, data = NC)
+
+tidy(NC_mar)
+
+```
+
+**Regression Equations:**
+
+`Tobacco usage in North Carolina 2013 - 2018:`
+
+$NC\_tobacco\_usage\_rate = 0.3069 - 0.0194 * year$
+
+$year$ = number of years since 2013
+
+`Marijuana usage in North Carolina 2013 - 2018:`
+
+$NC\_marijuana\_usage\_rate = 0.1768 + 0.0045 * year$
+
+$year$ = number of years since 2013
+
+```{r}
+#|: Marijuana-EDA
+
+combined <- full_join(Colorado, NC) 
 
 combined |>
   ggplot(aes(x = yrs_since_legal, y = Marijuana, color = State)) +
   geom_point() +
+  labs(title = "Marijuana Usage in CO and NC, 2013 - 2018", 
+       subtitle = "18 - 25 Year Olds", 
+       x = "Years Since Marijuana Legalization in CO (2013)",
+       y = "% of Population Using Marijuana") +
   geom_smooth(method = "lm", se = FALSE)
 
-add_model_mar <- linear_reg() |>
-  set_engine("lm") |>
-  fit(Marijuana ~ yrs_since_legal + State, data = combined)
-tidy(add_model_mar)
+```
+
+`Hypothesis Test Marijuana`
+
+$H_0:\beta_{Col\_mar} - \beta_{NC\_mar} = 0$
+
+$H_a:\beta_{Col\_mar} - \beta_{NC\_mar} > 0$
+
+Null hypothesis: There is no difference in the rate of increase in marijuana usage in Colorado (after marijuana was legalized) and North Carolina (where marijuana is not legal).
+
+Alternative Hypothesis: The increase in marijuana usage in Colorado (after marijuana was legalized) is greater than the increase in marijuana usage in North Carolina (where marijuana is not legal).
+
+```{r}
+#|: hypothesis-test-marijuana
 
 int_model_mar <- linear_reg() |>
   set_engine("lm") |>
   fit(Marijuana ~ yrs_since_legal * State, data = combined)
 tidy(int_model_mar)
+
 ```
 
-add model:
+**Regression equation:**
 
-CO: 0.312 + 0.005 \* year
+CO: 0.310 + 0.0056 \* yrs_since_legal
 
-NC: 0.176 + 0.005 \* year
+NC: 0.177 + 0.0056 \* yrs_since_legal
 
-statistically significant (low p value) constant term
+p value of interaction between explanatory variable (yrs_since_legal) and category (state: NC/CO): 0.73
 
-int model:
-
-CO: 0.310 + 0.006 \* year
-
-NC: 0.177 + 0.005 \* year
-
-high p value (0.7), coefficient not statistically significant
+Fail to reject the null hypothesis that there is no difference between the rate of increase in marijuana usage in Colorado and North Carolina.
 
 ```{r}
-#|: NC-vs-CO-tobacco
-
-tidy(NC_tob_2018)
-tidy(CO_tob_2018)
+#|: Tobacco-EDA
 
 combined |>
   ggplot(aes(x = yrs_since_legal, y = Tobacco, color = State)) +
   geom_point() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(title = "Tobacco Usage in CO and NC, 2013 - 2018", 
+       subtitle = "18 - 25 Year Olds", 
+       x = "Years Since Tobacco Legalization in CO (2013)",
+       y = "% of Population Using Tobacco") 
 
-add_model_tob <- linear_reg() |>
-  set_engine("lm") |>
-  fit(Tobacco ~ yrs_since_legal + State, data = combined)
-tidy(add_model_tob)
+```
+
+`Hypothesis Test Tobacco`
+
+$H_0:\beta_{Col\_tob} - \beta_{NC\_tob} = 0$
+
+$H_a:\beta_{Col\_tob} - \beta_{NC\_tob} < 0$
+
+Null hypothesis: There is no difference in the rate of decrease in tobacco usage in Colorado after marijuana was legalized and North Carolina where marijuana is not legal.
+
+Alternative Hypothesis: The decrease in tobacco usage in Colorado after marijuana was legalized is greater than the decrease in tobacco usage in North Carolina where marijuana is not legal.
+
+```{r}
+#|: hypothesis-test-tobacco
 
 int_model_tob <- linear_reg() |>
   set_engine("lm") |>
   fit(Tobacco ~ yrs_since_legal * State, data = combined)
+
 tidy(int_model_tob)
+
 ```
 
--   neither add or int model had statistically significant p values
+**Regression equation:**
 
--   means that we fail to reject null hypothesis: neither coefficient or constant is different
+CO: 0.3201 - 0.0237 \* yrs_since_legal
 
-The methodology section should include visualizations and summary statistics relevant to your research question. You should also justify the choice of statistical method(s) used to answer your research question.
+NC: 0.3070 - 0.0193 \* yrs_since_legal
 
-To analyze the research question of whether marijuana use has been increasing and tobacco use has been decreasing among from 2002 to 2018, we graphed their usage rates over time to examine potential trends. In addition, we looked at states where marijuana was legalized (Colorado) compared to others where it has not been legalized (North Carolina) to observe any potential differences this caused.
+p value of interaction between explanatory variable (yrs_since_legal) and category (state: NC/CO): 0.4
+
+Fail to reject the null hypothesis that there is no difference between the rate of decrease in tobacco usage in Colorado and North Carolina.
 
 **Results**
 
