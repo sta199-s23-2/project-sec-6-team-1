@@ -91,9 +91,6 @@ Colorado (recreational marijuana legalized 2012):
 Colorado <- new_drugs |>
   filter(State == "Colorado") |>
   select(c("Year", "Marijuana", "Tobacco", "State", "yrs_since_legal"))
-  # rename("Marijuana" = "rate_mar_18_25") |>
-  # rename("Tobacco" = "rate_tob_cig_18_25")
-
 
 CO_pivot <- Colorado |>
   pivot_longer(cols = c('Marijuana', 'Tobacco'),
@@ -211,6 +208,42 @@ $year$ = number of years since 2013
 ```{r}
 #|: Predictions-NC
 
+x <- predict(NC_mar, data.frame(yrs_since_legal = 9)) |>
+  pull()
+y <- predict(CO_mar, data.frame(yrs_since_legal = 9)) |>
+  pull()
+rates <- c(x, y)
+states <- c("North Carolina", "Colorado")
+mar_pred <- data.frame(rates, states)
+
+mar_pred |>
+  ggplot(aes(x = states, y = rates)) +
+  geom_bar(stat = "identity", fill = "dark green") +
+  labs(x = "State", y = "Predicted % Using Marijuana",
+       title = "Predicted % of 18 - 25 Year Olds Using Marijuana (2023)",
+       subtitle = "Colorado & North Carolina") +
+    scale_y_continuous(labels = scales::percent)
+
+a <- predict(NC_tob, data.frame(yrs_since_legal = 9)) |>
+  pull()
+b <- predict(CO_tob, data.frame(yrs_since_legal = 9)) |>
+  pull()
+
+rates2 <- c(a,b)
+tob_pred <- data.frame(rates2, states)
+
+tob_pred |>
+  ggplot(aes(x = states, y = rates2)) +
+  geom_bar(stat = "identity", fill = "darkorange") +
+  labs(x = "State", y = "Predicted % Using Tobacco",
+       title = "Predicted % of 18 - 25 Year Olds Using Tobacco (2023)",
+       subtitle = "Colorado & North Carolina") +
+    scale_y_continuous(labels = scales::percent)
+```
+
+```{r}
+#|: prediction-graphs
+
 predict(NC_tob, data.frame(yrs_since_legal = 9))
 predict(NC_mar, data.frame(yrs_since_legal = 9))
 
@@ -218,7 +251,6 @@ predict(NC_mar, data.frame(yrs_since_legal = 9))
 
 ```{r}
 #|: Marijuana-EDA
-# LAURA
 
 combined <- full_join(Colorado, NC) 
 
@@ -268,8 +300,6 @@ Fail to reject the null hypothesis that there is no difference between the rate 
 
 ```{r}
 #|: Tobacco-EDA
-
-# LAURA
 
 combined |>
   ggplot(aes(x = Year, y = Tobacco, color = State)) +
