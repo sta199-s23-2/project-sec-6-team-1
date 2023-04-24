@@ -77,7 +77,8 @@ new_drugs <- drugs |>
   rename("Tobacco" = "Rates.Tobacco.Cigarette Past Month.18-25") |>
   rename("Marijuana" = "Rates.Marijuana.Used Past Month.18-25") |>
   select("State", "Year", "Tobacco", "Marijuana") |>
-  filter(Year > 2012)
+  filter(Year > 2012) |>
+  mutate(yrs_since_legal = Year-2013)
   
   
 ```
@@ -89,7 +90,7 @@ Colorado (recreational marijuana legalized 2012):
 
 Colorado <- new_drugs |>
   filter(State == "Colorado") |>
-  select(c("Year", "Marijuana", "Tobacco", "State"))
+  select(c("Year", "Marijuana", "Tobacco", "State", "yrs_since_legal"))
   # rename("Marijuana" = "rate_mar_18_25") |>
   # rename("Tobacco" = "rate_tob_cig_18_25")
 
@@ -101,9 +102,9 @@ CO_pivot <- Colorado |>
 CO_pivot |>
   ggplot(aes(x = Year, y = Rates, fill = Drug)) +
   geom_line(aes(color = Drug)) +
-  labs(title = "Tobacco and Marijuana Usage Rates in Colorado, 2013 - 2018", 
-       subtitle = "18-25 year olds", y = "% of population using",
-       caption = "SOURCE OF DATA HERE") +
+  labs(title = "Tobacco and Marijuana Usage Rates in Colorado", 
+       subtitle = "2013-2018, 18-25 year olds", y = "% of Population Using Drug",
+       caption = "Source: SAMHDA") +
   scale_y_continuous(labels = scales::percent)
   
 ```
@@ -217,17 +218,21 @@ predict(NC_mar, data.frame(yrs_since_legal = 9))
 
 ```{r}
 #|: Marijuana-EDA
+# LAURA
 
 combined <- full_join(Colorado, NC) 
 
 combined |>
-  ggplot(aes(x = yrs_since_legal, y = Marijuana, color = State)) +
+  ggplot(aes(x = Year, y = Marijuana, color = State)) +
   geom_point() +
   labs(title = "Marijuana Usage in CO and NC, 2013 - 2018", 
        subtitle = "18 - 25 Year Olds", 
-       x = "Years Since Marijuana Legalization in CO (2013)",
-       y = "% of Population Using Marijuana") +
-  geom_smooth(method = "lm", se = FALSE)
+       x = "Year",
+       y = "% of Population Using Marijuana",
+       caption = "Source: SAMHDA") +
+  theme(legend.position="bottom") +
+  geom_smooth(method = "lm", se = FALSE) +
+  scale_y_continuous(labels = scales::percent)
 
 ```
 
@@ -264,14 +269,20 @@ Fail to reject the null hypothesis that there is no difference between the rate 
 ```{r}
 #|: Tobacco-EDA
 
+# LAURA
+
 combined |>
-  ggplot(aes(x = yrs_since_legal, y = Tobacco, color = State)) +
+  ggplot(aes(x = Year, y = Tobacco, color = State)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) +
   labs(title = "Tobacco Usage in CO and NC, 2013 - 2018", 
        subtitle = "18 - 25 Year Olds", 
-       x = "Years Since Tobacco Legalization in CO (2013)",
-       y = "% of Population Using Tobacco") 
+       x = "Year",
+       y = "% of Population Using Tobacco",
+       caption = "Source: SAMHDA") +
+  theme(legend.position="bottom") +
+  geom_smooth(method = "lm", se = FALSE) +
+  scale_y_continuous(labels = scales::percent)
 
 ```
 
