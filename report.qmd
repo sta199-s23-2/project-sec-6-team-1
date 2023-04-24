@@ -313,6 +313,14 @@ CO: $0.3201 - 0.0237 * yrs\_since\_legal$
 
 NC: $0.3070 - 0.0193 * yrs\_since\_legal$
 
+`Tobacco usage in Colorado after marijuana legalization (2013 - 2018):`
+
+$CO\_tobacco\_usage\_rate = 0.3201 - 0.0237 * year$
+
+`Tobacco usage in North Carolina 2013 - 2018:`
+
+$NC\_tobacco\_usage\_rate = 0.3070 - 0.0193 * year$
+
 p value of interaction between explanatory variable (yrs_since_legal) and category (state: NC/CO): 0.4
 
 Fail to reject the null hypothesis that there is no difference between the rate of decrease in tobacco usage in Colorado and North Carolina.
