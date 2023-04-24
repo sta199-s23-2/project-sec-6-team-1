@@ -111,9 +111,6 @@ CO_pivot |>
 ```{r}
 #| label: linear-regression
 
-Colorado <- Colorado |>
-  mutate(yrs_since_legal = Year - 2013)
-
 CO_tob <- linear_reg() |>
   set_engine("lm") |>
   fit(Tobacco ~ yrs_since_legal, data = Colorado)
@@ -143,10 +140,10 @@ $CO\_marijuana\_usage\_rate = 0.3101 + 0.0056 * year$
 $year$ = number of years since 2013
 
 ```{r}
-#|: Predictions
+#|: Predictions-CO
 
-predict(CO_tob_2018, data.frame(Year = 9))
-predict(CO_mar_2018, data.frame(Year = 9))
+predict(CO_tob, data.frame(yrs_since_legal = 9))
+predict(CO_mar, data.frame(yrs_since_legal = 9))
 ```
 
 **Predictions:**
@@ -209,6 +206,14 @@ $year$ = number of years since 2013
 $NC\_marijuana\_usage\_rate = 0.1768 + 0.0045 * year$
 
 $year$ = number of years since 2013
+
+```{r}
+#|: Predictions-NC
+
+predict(NC_tob, data.frame(yrs_since_legal = 9))
+predict(NC_mar, data.frame(yrs_since_legal = 9))
+
+```
 
 ```{r}
 #|: Marijuana-EDA
