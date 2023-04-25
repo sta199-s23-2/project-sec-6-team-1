@@ -238,7 +238,8 @@ tob_pred |>
   labs(x = "State", y = "Predicted % Using Tobacco",
        title = "Predicted % of 18 - 25 Year Olds Using Tobacco (2023)",
        subtitle = "Colorado & North Carolina") +
-    scale_y_continuous(labels = scales::percent)
+    scale_y_continuous(labels = scales::percent) +
+  theme_bw()
 ```
 
 ```{r}
