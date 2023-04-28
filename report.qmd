@@ -8,7 +8,7 @@ execute:
 ---
 
 ```{r}
-#|: libraries
+#| label: libraries
 
 library(tidyverse)
 library(tidymodels)
@@ -26,7 +26,7 @@ As mentioned earlier, we chose to focus on Colorado because marijuana was legali
 It is important to consider the ethical concerns and biases that may be present in the collection of this data. Since our data comes from a voluntary response sample, it may not be entirely accurate because people can choose to not respond or to respond inaccurately, especially when regarding a topic such as drug use that has legal implications. 
 
 ```{r}
-#|: data
+#| label: data
 
 drugs <- read_csv("data/drugs.csv")
 
@@ -50,12 +50,10 @@ A study done from 2008 - 2016 investigated whether increases in recreational mar
 
 Source: Cerdá, Magdalena et al. \"Association Between Recreational Marijuana Legalization in the United States and Changes in Marijuana Use and Cannabis Use Disorder From 2008 to 2016.\" *JAMA Psychiatry*, vol. 77, no. 2, Nov. 2019, doi:10.1001/jamapsychiatry.2019.3254.
 
-\newpage
-
-**Methodolgy**
+**Methodology**
 
 ```{r}
-#|: EDA-marijuana
+#| label: EDA-marijuana
 
 new_drugs |>
   ggplot(aes(x = Year, y = Marijuana, color = State)) +
@@ -72,7 +70,7 @@ new_drugs |>
 ```
 
 ```{r}
-#|: EDA-tobacco
+#| label: EDA-tobacco
 
 new_drugs |>
   ggplot(aes(x = Year, y = Tobacco, color = State)) +
@@ -91,8 +89,6 @@ new_drugs |>
 
 To explore our research question, we conducted two hypothesis tests for a difference in the regression coefficients (the difference in the rate of change) of marijuana usage and tobacco usage in Colorado and North Carolina. To do this, we built two interaction models that examined the interaction effect that the state (CO or NO) and explanatory variable (years since legalization) had on the response variable (marijuana usage rate, tobacco usage rate. We then used the p-value of the interaction term given by the model in our hypothesis test.
 
-\newpage
-
 **Hypothesis Test for Marijuana**
 
 $H_0:\beta_{Col\_mar} - \beta_{NC\_mar} = 0$
@@ -104,7 +100,7 @@ Null hypothesis: There is no difference in the rate of increase in marijuana usa
 Alternative Hypothesis: The increase in marijuana usage in Colorado is greater than the increase in marijuana usage in North Carolina from 2013-2018
 
 ```{r}
-#|: int-model-marijuana
+#| label: int-model-marijuana
 
 int_model_mar <- linear_reg() |>
   set_engine("lm") |>
@@ -112,8 +108,6 @@ int_model_mar <- linear_reg() |>
 
 tidy(int_model_mar)
 ```
-
-\newpage
 
 **Hypothesis Test for Tobacco:**
 
@@ -126,7 +120,7 @@ Null hypothesis: There is no difference in the rate of decrease in tobacco usage
 Alternative Hypothesis: The decrease in tobacco usage in Colorado is greater than the decrease in tobacco usage in North Carolina from 2013-2018
 
 ```{r}
-#|: hypothesis-test-tobacco
+#| label: hypothesis-test-tobacco
 
 int_model_tob <- linear_reg() |>
   set_engine("lm") |>
@@ -135,10 +129,8 @@ int_model_tob <- linear_reg() |>
 tidy(int_model_tob)
 ```
 
-\newpage
-
 ```{r}
-#|: Predictions-marijuana
+#| label: Predictions-marijuana
 
 nc_mar_pred <- predict(int_model_mar, 
                 data.frame(yrs_since_legal = 9, State = "North Carolina")) |>
@@ -162,7 +154,7 @@ graph1 |>
 ```
 
 ```{r}
-#|: Predictions-tobacco
+#| label: Predictions-tobacco
 
 nc_tob_pred <- predict(int_model_tob, 
                 data.frame(yrs_since_legal = 9, State = "North Carolina")) |>
@@ -215,7 +207,5 @@ $year$ = number of years since marijuana legalization in Colorado (2013)
 p-value of interaction between explanatory variable (year) and category (state: NC/CO): 0.4
 
 For both of our hypothesis tests, the p-value of the interaction between our explanatory variable (the number of years since marijuana legalization in Colorado in 2013) and our category (the two states Colorado and North Carolina) was much higher than our chosen significance level of 0.05. Therefore, we failed to reject the null hypothesis that there is no difference in the rate of increase in marijuana usage and the rate of decrease in tobacco usage between North Carolina and Colorado. 
-
-\newpage
 
 **Discussion**
