@@ -1,6 +1,6 @@
 ---
-title: "How legalization of marijuana has affected marijuana & tobacco use"
-subtitle: "18-25 year olds in Colorado and North Carolina"
+title: "Marijuana Legalization & Effects"
+subtitle: "On 18-25 Year Olds in CO & NC"
 format: html
 editor: visual
 execute:
@@ -9,7 +9,7 @@ execute:
 
 ```{r}
 #| label: libraries
-#| eval = FALSE
+#| message: false
 
 library(tidyverse)
 library(tidymodels)
