@@ -1,6 +1,6 @@
 ---
-title: "Project title"
-subtitle: "Report"
+title: "How legalization of marijuana has affected marijuana and tobacco use in Colorado and North Carolina"
+subtitle: "Andy Chen, Laura Cai, Jaden Faunteroy, Luke Hardin"
 format: html
 editor: visual
 execute:
@@ -9,6 +9,7 @@ execute:
 
 ```{r}
 #| label: libraries
+#| eval = FALSE
 
 library(tidyverse)
 library(tidymodels)
@@ -21,7 +22,7 @@ How has the rate of marijuana and tobacco use changed from 2013 to 2018 in 18-25
 
 Our dataset contains alcohol, cigarette, cocaine, marijuana, and tobacco use statistics for all 50 states and the District of Columbia from 2002 - 2018, broken down into three age ranges: 12-17, 18-25, and 26+. The data comes from CORGIS: The Collection of Really Great, Interesting, Situated Datasets, and was originally stored in the Substance Abuse & Mental Health Data Archive (SAMHDA). The data was gathered from the annual National Survey on Drug Use and Health. There are 53  variables, including state, year, and usage (totals and rates) of various drugs for each age group. The dataset includes 867 total observations.
 
-As mentioned earlier, we chose to focus on Colorado because marijuana was legalized there and North Carolina because that\'s where we are. Therefore, we filtered the dataset for just those two states. In addition, since we are investigating marijuana and tobacco usage among 18-25 year olds we selected just marijuana usage rates and tobacco usage rates for 18-25 year olds among all the drug use data that was included. Finally, several variables were renamed and a new variable \"years since legalization\" was created to represent the number of years that had passed since marijuana legalization in Colorado in 2013.  
+As mentioned earlier, we chose to focus on Colorado because marijuana was legalized there and North Carolina because that's where we are. Therefore, we filtered the dataset for just those two states. In addition, since we are investigating marijuana and tobacco usage among 18-25 year olds we selected just marijuana usage rates and tobacco usage rates for 18-25 year olds among all the drug use data that was included. Finally, several variables were renamed and a new variable "years since legalization" was created to represent the number of years that had passed since marijuana legalization in Colorado in 2013.  
 
 It is important to consider the ethical concerns and biases that may be present in the collection of this data. Since our data comes from a voluntary response sample, it may not be entirely accurate because people can choose to not respond or to respond inaccurately, especially when regarding a topic such as drug use that has legal implications. 
 
@@ -46,9 +47,9 @@ new_drugs <- drugs |>
 
 **Literature Review**
 
-A study done from 2008 - 2016 investigated whether increases in recreational marijuana legalization led to any changes in marijuana use and cannabis use disorder. The study also used data from the National Survey on Drug Use and Health, and looked at the states of Colorado, Washington, Alaska, and Oregon because of their recent recreational marijuana legalization and compared them to other \"control\" states where recreational marjuana has not been legalized. To examine if there were differences in marijuana usage after its legalization, the authors looked at the three age ranges of 12-17 years old, 18-25 years old, and 26+ years old and constructed logistic regression models that measured before vs after changes in variables such as self reported past month marijuana use, frequent marijuana use, and cannabis use disorder. They found that for 12-17 year olds, legalization of marijuana led to an increase in cannabis use disorder, and for 26+ year olds past month marijuana usage increased. However, for 18-25 year olds there were no significant increases in marijuana use or cannabis use disorder. This study is related to our research because it also looks at the effects of marijuana legalization. However, our study adds to this work by also examining whether marijuana legalization has any impact on tobacco usage as well. 
+A study done from 2008 - 2016 investigated whether increases in recreational marijuana legalization led to any changes in marijuana use and cannabis use disorder. The study also used data from the National Survey on Drug Use and Health, and looked at the states of Colorado, Washington, Alaska, and Oregon because of their recent recreational marijuana legalization and compared them to other "control" states where recreational marjuana has not been legalized. To examine if there were differences in marijuana usage after its legalization, the authors looked at the three age ranges of 12-17 years old, 18-25 years old, and 26+ years old and constructed logistic regression models that measured before vs after changes in variables such as self reported past month marijuana use, frequent marijuana use, and cannabis use disorder. They found that for 12-17 year olds, legalization of marijuana led to an increase in cannabis use disorder, and for 26+ year olds past month marijuana usage increased. However, for 18-25 year olds there were no significant increases in marijuana use or cannabis use disorder. This study is related to our research because it also looks at the effects of marijuana legalization. However, our study adds to this work by also examining whether marijuana legalization has any impact on tobacco usage as well. 
 
-Source: Cerdá, Magdalena et al. \"Association Between Recreational Marijuana Legalization in the United States and Changes in Marijuana Use and Cannabis Use Disorder From 2008 to 2016.\" *JAMA Psychiatry*, vol. 77, no. 2, Nov. 2019, doi:10.1001/jamapsychiatry.2019.3254.
+Source: Cerdá, Magdalena et al. "Association Between Recreational Marijuana Legalization in the United States and Changes in Marijuana Use and Cannabis Use Disorder From 2008 to 2016." *JAMA Psychiatry*, vol. 77, no. 2, Nov. 2019, doi:10.1001/jamapsychiatry.2019.3254.
 
 **Methodology**
 
