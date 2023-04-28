@@ -5,4 +5,6 @@ format: html
 editor: visual
 ---
 
-Add project abstract here.
+Recently, many states have begun to legalize the recreational use of marijuana. We were interested in examining how the legalization of marijuana affected the usage of both marijuana and tobacco. To investigate, we used data collected from the National Survey on Drug Use and Health. We focused on the two states of Colorado (which legalized marijuana in 2013) and North Carolina (where marijuana remains illegal) and looked at differences in tobacco and marijuana usage between the two states in 18-25 year olds from 2013 - 2018. We performed hypothesis tests on the rate of increase in marijuana usage and the rate of decrease in tobacco usage to determine if a statistically significant difference existed among the rates between the two states. Our hypothesis was that since marijuana was legalized in Colorado, there would be a larger increase in marijuana usage and a larger decrease in tobacco usage in Colorado than in North Carolina. However, our hypothesis was wrong and we found no significant difference between the two, giving no evidence that legalizing marijuana impacts the usage rate of marijuana or tobacco.
+
+\
