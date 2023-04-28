@@ -4,261 +4,63 @@ subtitle: "Report"
 format: html
 editor: visual
 execute:
-  echo: true
+  echo: false
 ---
 
-**Research Question**
-
-How has the rate of marijuana and tobacco use changed from 2002 to 2018 in 18-25 year olds in North Carolina (where marijuana is illegal) and Colorado (where marijuana was legalized in 2013), and is there a significant difference between marijuana and tobacco use in the two states?
-
-**Introduction and data**
-
--   state your research question as a question-- make sure that your hypothesis actually addresses the questions you are asking.
-
--   introduce how many variables you have (and how many you are using), as well as how many observations you have (my guess is 51 per year for each year, but if that isn't the case then you should address that).
-
--   expand on context
-
--   address any ethical concerns or biases in the data collection here (which may be that some data is not collected/reported/survey biases).
-
--   literature review from your proposal, or other literature review
-
--   include footnotes or other citation for any sources you're using, including your literature review and your data set.
-
-Our dataset contains alcohol, cigarette, cocaine, marijuana, and tobacco use statistics for all 50 states and the District of Columbia from 2002 - 2018, broken down into three age ranges: 12-17, 18-25, and 26+. The data comes from CORGIS: The Collection of Really Great, Interesting, Situated Datasets, and was originally stored in the Substance Abuse & Mental Health Data Archive (SAMHDA). The data was gathered from the annual National Survey on Drug Use and Health.
-
-There are 53 variables, including state, year, population for each age group and usage (totals and rates) of various drugs for each age group. The dataset includes 867 observations, representing 50 states and the District of Columbia for each year from 2002 to 2018.
-
-It it important to consider the ethical concerns and biases that may be present in the collection of this data. Since our sample is a voluntary response sample, some data wouldn't be reported or reported accurately.
-
-Given the increase in legalization of medical and recreational cannabis (Forbes) and the increase in tobacco prevention education (Tobacco Free Kids) in the past several decades, we wanted to explore to see if the marijuana usage has been increasing and tobacco usage has been decreasing among different age groups from 2002 to 2018.
-
-Our hypothesis is that Colorado, which legalized the recreational use of marijuana, would experience a more significant increase in marijuana usage over time when compared to North Carolina. Through exploring the data, we hope to extract insights on potential causes or correlations with other variables in the data that affect trends in drug usage. There are both categorical and quantitative variables involved in our research question: the states in the data set are categorical while the totals and rates of tobacco and marijuana are quantitative.
-
-**Literature**
-
-Your Guide To Cannabis Legalization By State-- Forbes
-
-With Cannabis as the most commonly used illicit drug in the US, Forbes Health created a guides that lays out the uses and legislation of marijuana across the US. While some states like Alabama, Florida, and Pennslyvania legalize medical use only, other states like Colorado, Washington, and New York legalized marijuana completely. There is a full range of legislation between illegal and legal depending on each state, and the legislation continues to change up until today.
-
-New Report: States Continue to Shortchange Tobacco Prevention Programs, But Several Show a Welcome Increase-- Tobacco-Free Kids Many states have increased funding for tobacco prevention programs.
-
-More teens using marijuana with electronic smoking devices - Parent alert! Your kid may be vaping more than tobacco-- Forbes
-
-This article explores the usage of vapes that contain THC. They look at the change in popularity from cigarettes (tobacco) to e-cigarettes and vaping (nicotine) to new vapes that contain marijuana substances. Now, these vapes are becoming increasingly easy to access, leading to the rise of adolescents and young adults being exposed to marijuana.
-
-**Methodology**
-
--   change y-axes from rate to percentages (0-100%)
--   more modeling (linear model to see change over time in differnet states or regions)
--   hypothesis testing (is the mean rate of tobacco usage higher than marijuana usage in both 2002 and 2018 at a statistically significant level, or are the mean rates different for the different age groups)
--   for question about legal marijuana-- make a group of states which have legalized and a group o states which have not and look for statisitcally significant differences in the two groups
--   justify the methods used
-
 ```{r}
-#| label: load_libraries
+#|: libraries
 
 library(tidyverse)
 library(tidymodels)
 library(ggplot2)
 ```
 
+**Introduction and Data**
+
+How has the rate of marijuana and tobacco use changed from 2013 to 2018 in 18-25 year olds in North Carolina (where marijuana is illegal) and Colorado (where marijuana was legalized in 2013), and is there a significant difference between the change in marijuana and tobacco use in the two states? Given the recent increase in legalization of cannabis (Forbes) and the increase in tobacco prevention education (Tobacco Free Kids) in the past several decades, we were interested to see if marijuana usage has been increasing and tobacco usage has been decreasing among 18-25 year olds (which is our age range) from 2013 to 2018.
+
+Our dataset contains alcohol, cigarette, cocaine, marijuana, and tobacco use statistics for all 50 states and the District of Columbia from 2002 - 2018, broken down into three age ranges: 12-17, 18-25, and 26+. The data comes from CORGIS: The Collection of Really Great, Interesting, Situated Datasets, and was originally stored in the Substance Abuse & Mental Health Data Archive (SAMHDA). The data was gathered from the annual National Survey on Drug Use and Health. There are 53  variables, including state, year, and usage (totals and rates) of various drugs for each age group. The dataset includes 867 total observations.
+
+As mentioned earlier, we chose to focus on Colorado because marijuana was legalized there and North Carolina because that\'s where we are. Therefore, we filtered the dataset for just those two states. In addition, since we are investigating marijuana and tobacco usage among 18-25 year olds we selected just marijuana usage rates and tobacco usage rates for 18-25 year olds among all the drug use data that was included. Finally, several variables were renamed and a new variable \"years since legalization\" was created to represent the number of years that had passed since marijuana legalization in Colorado in 2013.  
+
+It is important to consider the ethical concerns and biases that may be present in the collection of this data. Since our data comes from a voluntary response sample, it may not be entirely accurate because people can choose to not respond or to respond inaccurately, especially when regarding a topic such as drug use that has legal implications. 
+
 ```{r}
-#| label: load_data
+#|: data
 
 drugs <- read_csv("data/drugs.csv")
 
 ```
 
 ```{r}
-#| label: rename_columns
+#| label: clean-data
 
 new_drugs <- drugs |>
   rename("Tobacco" = "Rates.Tobacco.Cigarette Past Month.18-25") |>
   rename("Marijuana" = "Rates.Marijuana.Used Past Month.18-25") |>
   select("State", "Year", "Tobacco", "Marijuana") |>
   filter(Year > 2012) |>
+  filter(State == "Colorado" | State == "North Carolina") |>
   mutate(yrs_since_legal = Year-2013)
-  
-  
 ```
 
-Colorado (recreational marijuana legalized 2012):
+**Literature Review**
+
+A study done from 2008 - 2016 investigated whether increases in recreational marijuana legalization led to any changes in marijuana use and cannabis use disorder. The study also used data from the National Survey on Drug Use and Health, and looked at the states of Colorado, Washington, Alaska, and Oregon because of their recent recreational marijuana legalization and compared them to other \"control\" states where recreational marjuana has not been legalized. To examine if there were differences in marijuana usage after its legalization, the authors looked at the three age ranges of 12-17 years old, 18-25 years old, and 26+ years old and constructed logistic regression models that measured before vs after changes in variables such as self reported past month marijuana use, frequent marijuana use, and cannabis use disorder. They found that for 12-17 year olds, legalization of marijuana led to an increase in cannabis use disorder, and for 26+ year olds past month marijuana usage increased. However, for 18-25 year olds there were no significant increases in marijuana use or cannabis use disorder. This study is related to our research because it also looks at the effects of marijuana legalization. However, our study adds to this work by also examining whether marijuana legalization has any impact on tobacco usage as well. 
+
+Source: Cerdá, Magdalena et al. \"Association Between Recreational Marijuana Legalization in the United States and Changes in Marijuana Use and Cannabis Use Disorder From 2008 to 2016.\" *JAMA Psychiatry*, vol. 77, no. 2, Nov. 2019, doi:10.1001/jamapsychiatry.2019.3254.
+
+\newpage
+
+**Methodolgy**
 
 ```{r}
-#| label: Colorado-EDA
+#|: EDA-marijuana
 
-Colorado <- new_drugs |>
-  filter(State == "Colorado") |>
-  select(c("Year", "Marijuana", "Tobacco", "State", "yrs_since_legal"))
-
-CO_pivot <- Colorado |>
-  pivot_longer(cols = c('Marijuana', 'Tobacco'),
-               names_to = "Drug", values_to = "Rates") 
-
-CO_pivot |>
-  ggplot(aes(x = Year, y = Rates, fill = Drug)) +
-  geom_line(aes(color = Drug)) +
-  labs(title = "Tobacco and Marijuana Usage Rates in Colorado", 
-       subtitle = "2013-2018, 18-25 year olds", y = "% of Population Using Drug",
-       caption = "Source: SAMHDA") +
-  scale_y_continuous(labels = scales::percent)
-  
-```
-
-```{r}
-#| label: linear-regression
-
-CO_tob <- linear_reg() |>
-  set_engine("lm") |>
-  fit(Tobacco ~ yrs_since_legal, data = Colorado)
-
-tidy(CO_tob)
-
-CO_mar <- linear_reg() |>
-  set_engine("lm") |>
-  fit(Marijuana ~ yrs_since_legal, data = Colorado)
-
-tidy(CO_mar)
-
-```
-
-**Regression Equations:**
-
-`Tobacco usage in Colorado after marijuana legalization (2013 - 2018):`
-
-$CO\_tobacco\_usage\_rate = 0.3201 - 0.0237 * year$
-
-$year$ = number of years since 2013
-
-`Marijuana usage in Colorado after legalization (2013 - 2018):`
-
-$CO\_marijuana\_usage\_rate = 0.3101 + 0.0056 * year$
-
-$year$ = number of years since 2013
-
-```{r}
-#|: Predictions-CO
-
-predict(CO_tob, data.frame(yrs_since_legal = 9))
-predict(CO_mar, data.frame(yrs_since_legal = 9))
-```
-
-**Predictions:**
-
-Predicted % of Coloradan's using tobacco in 2023: 10.69%
-
-Predicted % of Coloradan's using marijuana in 2023: 36.07%
-
-```{r}
-#| label: NC-EDA
-
-NC <- new_drugs |>
-  filter(State == "North Carolina") |>
-  select(c("Year", "Marijuana", "Tobacco", "State"))
-
-NC_pivot <- NC |>
-  pivot_longer(cols = c('Marijuana', 'Tobacco'),
-               names_to = "Drug", values_to = "Rates") 
-
-NC_pivot |>
-  ggplot(aes(x = Year, y = Rates, fill = Drug)) +
-  geom_line(aes(color = Drug)) +
-  labs(title = "Tobacco and Marijuana Usage Rates in NC, 2013 - 2018", 
-       subtitle = "18-25 year olds", y = "% of population using",
-       caption = "SOURCE OF DATA HERE") +
-  scale_y_continuous(labels = scales::percent)
-
-```
-
-```{r}
-#|: linear-regression-NC
-
-NC <- NC |>
-  mutate(yrs_since_legal = Year - 2013)
-
-NC_tob <- linear_reg() |>
-  set_engine("lm") |>
-  fit(Tobacco ~ yrs_since_legal, data = NC)
-
-tidy(NC_tob)
-
-NC_mar <- linear_reg() |>
-  set_engine("lm") |>
-  fit(Marijuana ~ yrs_since_legal, data = NC)
-
-tidy(NC_mar)
-
-```
-
-**Regression Equations:**
-
-`Tobacco usage in North Carolina 2013 - 2018:`
-
-$NC\_tobacco\_usage\_rate = 0.3069 - 0.0194 * year$
-
-$year$ = number of years since 2013
-
-`Marijuana usage in North Carolina 2013 - 2018:`
-
-$NC\_marijuana\_usage\_rate = 0.1768 + 0.0045 * year$
-
-$year$ = number of years since 2013
-
-```{r}
-#|: Predictions-NC
-
-x <- predict(NC_mar, data.frame(yrs_since_legal = 9)) |>
-  pull()
-y <- predict(CO_mar, data.frame(yrs_since_legal = 9)) |>
-  pull()
-rates <- c(x, y)
-states <- c("North Carolina", "Colorado")
-mar_pred <- data.frame(rates, states)
-
-mar_pred |>
-  ggplot(aes(x = states, y = rates)) +
-  geom_bar(stat = "identity", fill = "dark green") +
-  labs(x = "State", y = "Predicted % Using Marijuana",
-       title = "Predicted % of 18 - 25 Year Olds Using Marijuana (2023)",
-       subtitle = "Colorado & North Carolina") +
-    scale_y_continuous(labels = scales::percent)
-
-a <- predict(NC_tob, data.frame(yrs_since_legal = 9)) |>
-  pull()
-b <- predict(CO_tob, data.frame(yrs_since_legal = 9)) |>
-  pull()
-
-rates2 <- c(a,b)
-tob_pred <- data.frame(rates2, states)
-
-tob_pred |>
-  ggplot(aes(x = states, y = rates2)) +
-  geom_bar(stat = "identity", fill = "darkorange") +
-  labs(x = "State", y = "Predicted % Using Tobacco",
-       title = "Predicted % of 18 - 25 Year Olds Using Tobacco (2023)",
-       subtitle = "Colorado & North Carolina") +
-    scale_y_continuous(labels = scales::percent) +
-  theme_bw()
-```
-
-```{r}
-#|: prediction-graphs
-
-predict(NC_tob, data.frame(yrs_since_legal = 9))
-predict(NC_mar, data.frame(yrs_since_legal = 9))
-
-```
-
-```{r}
-#|: Marijuana-EDA
-
-combined <- full_join(Colorado, NC) 
-
-combined |>
+new_drugs |>
   ggplot(aes(x = Year, y = Marijuana, color = State)) +
   geom_point() +
-  labs(title = "Marijuana Usage in CO and NC, 2013 - 2018", 
+  labs(title = "Marijuana Usage in CO and NC (2013 - 2018)", 
        subtitle = "18 - 25 Year Olds", 
        x = "Year",
        y = "% of Population Using Marijuana",
@@ -269,44 +71,14 @@ combined |>
 
 ```
 
-`Hypothesis Test Marijuana`
-
-$H_0:\beta_{Col\_mar} - \beta_{NC\_mar} = 0$
-
-$H_a:\beta_{Col\_mar} - \beta_{NC\_mar} > 0$
-
-Null hypothesis: There is no difference in the rate of increase in marijuana usage in Colorado (after marijuana was legalized) and North Carolina (where marijuana is not legal).
-
-Alternative Hypothesis: The increase in marijuana usage in Colorado (after marijuana was legalized) is greater than the increase in marijuana usage in North Carolina (where marijuana is not legal).
-
 ```{r}
-#|: hypothesis-test-marijuana
+#|: EDA-tobacco
 
-int_model_mar <- linear_reg() |>
-  set_engine("lm") |>
-  fit(Marijuana ~ yrs_since_legal * State, data = combined)
-tidy(int_model_mar)
-
-```
-
-**Regression equation:**
-
-CO: $0.310 + 0.0056 * yrs\_since\_legal$
-
-NC: $0.177 + 0.0056 * yrs\_since\_legal$
-
-p value of interaction between explanatory variable (yrs_since_legal) and category (state: NC/CO): 0.73
-
-Fail to reject the null hypothesis that there is no difference between the rate of increase in marijuana usage in Colorado and North Carolina.
-
-```{r}
-#|: Tobacco-EDA
-
-combined |>
+new_drugs |>
   ggplot(aes(x = Year, y = Tobacco, color = State)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) +
-  labs(title = "Tobacco Usage in CO and NC, 2013 - 2018", 
+  labs(title = "Tobacco Usage in CO and NC (2013 - 2018)", 
        subtitle = "18 - 25 Year Olds", 
        x = "Year",
        y = "% of Population Using Tobacco",
@@ -317,57 +89,133 @@ combined |>
 
 ```
 
-`Hypothesis Test Tobacco`
+To explore our research question, we conducted two hypothesis tests for a difference in the regression coefficients (the difference in the rate of change) of marijuana usage and tobacco usage in Colorado and North Carolina. To do this, we built two interaction models that examined the interaction effect that the state (CO or NO) and explanatory variable (years since legalization) had on the response variable (marijuana usage rate, tobacco usage rate. We then used the p-value of the interaction term given by the model in our hypothesis test.
+
+\newpage
+
+**Hypothesis Test for Marijuana**
+
+$H_0:\beta_{Col\_mar} - \beta_{NC\_mar} = 0$
+
+$H_a:\beta_{Col\_mar} - \beta_{NC\_mar} > 0$
+
+Null hypothesis: There is no difference in the rate of increase in marijuana usage in Colorado and North Carolina between 2013-2018
+
+Alternative Hypothesis: The increase in marijuana usage in Colorado is greater than the increase in marijuana usage in North Carolina from 2013-2018
+
+```{r}
+#|: int-model-marijuana
+
+int_model_mar <- linear_reg() |>
+  set_engine("lm") |>
+  fit(Marijuana ~ yrs_since_legal * State, data = new_drugs)
+
+tidy(int_model_mar)
+```
+
+\newpage
+
+**Hypothesis Test for Tobacco:**
 
 $H_0:\beta_{Col\_tob} - \beta_{NC\_tob} = 0$
 
 $H_a:\beta_{Col\_tob} - \beta_{NC\_tob} < 0$
 
-Null hypothesis: There is no difference in the rate of decrease in tobacco usage in Colorado after marijuana was legalized and North Carolina where marijuana is not legal.
+Null hypothesis: There is no difference in the rate of decrease in tobacco usage in Colorado and North Carolina from 2013-2018
 
-Alternative Hypothesis: The decrease in tobacco usage in Colorado after marijuana was legalized is greater than the decrease in tobacco usage in North Carolina where marijuana is not legal.
+Alternative Hypothesis: The decrease in tobacco usage in Colorado is greater than the decrease in tobacco usage in North Carolina from 2013-2018
 
 ```{r}
 #|: hypothesis-test-tobacco
 
 int_model_tob <- linear_reg() |>
   set_engine("lm") |>
-  fit(Tobacco ~ yrs_since_legal * State, data = combined)
+  fit(Tobacco ~ yrs_since_legal * State, data = new_drugs)
 
 tidy(int_model_tob)
+```
+
+\newpage
+
+```{r}
+#|: Predictions-marijuana
+
+nc_mar_pred <- predict(int_model_mar, 
+                data.frame(yrs_since_legal = 9, State = "North Carolina")) |>
+                pull()
+co_mar_pred <- predict(int_model_mar, 
+                data.frame(yrs_since_legal = 9, State = "Colorado")) |>
+                pull()
+m_pred <- c(nc_mar_pred, co_mar_pred)
+states <- c("North Carolina", "Colorado")
+graph1 <- data.frame(m_pred, states)
+
+graph1 |>
+  ggplot(aes(x = states, y = m_pred)) +
+  geom_bar(stat = "identity", fill = "dark green") +
+  labs(x = "State", y = "Predicted % Using Marijuana",
+       title = "Predicted % of 18 - 25 Year Olds Using Marijuana (2023)",
+       subtitle = "Colorado & North Carolina") +
+    scale_y_continuous(labels = scales::percent) + 
+  theme_bw()
 
 ```
 
-**Regression equation:**
+```{r}
+#|: Predictions-tobacco
 
-CO: $0.3201 - 0.0237 * yrs\_since\_legal$
+nc_tob_pred <- predict(int_model_tob, 
+                data.frame(yrs_since_legal = 9, State = "North Carolina")) |>
+                pull()
 
-NC: $0.3070 - 0.0193 * yrs\_since\_legal$
+co_tob_pred <- predict(int_model_tob, 
+                data.frame(yrs_since_legal = 9, State = "Colorado")) |>
+                pull()
 
-`Tobacco usage in Colorado after marijuana legalization (2013 - 2018):`
+t_pred <- c(nc_tob_pred, co_tob_pred)
+graph2<- data.frame(t_pred, states)
 
-$CO\_tobacco\_usage\_rate = 0.3201 - 0.0237 * year$
+graph2 |>
+  ggplot(aes(x = states, y = t_pred)) +
+  geom_bar(stat = "identity", fill = "darkorange") +
+  labs(x = "State", y = "Predicted % Using Tobacco",
+       title = "Predicted % of 18 - 25 Year Olds Using Tobacco (2023)",
+       subtitle = "Colorado & North Carolina") +
+    scale_y_continuous(labels = scales::percent) +
+  theme_bw()
 
-`Tobacco usage in North Carolina 2013 - 2018:`
-
-$NC\_tobacco\_usage\_rate = 0.3070 - 0.0193 * year$
-
-p value of interaction between explanatory variable (yrs_since_legal) and category (state: NC/CO): 0.4
-
-Fail to reject the null hypothesis that there is no difference between the rate of decrease in tobacco usage in Colorado and North Carolina.
+```
 
 **Results**
 
--   expand more on methodology
--   hypothesis testing
--   linear modeling and talk about trend lines
--   expand on overall summary sentence
--   add about limitations on research
+**`Regression Equations`**
 
-Looking at the trends in past-month marijuana usage and past-month tobacco usage across the nation, the graph "Tobacco and Marijuana Used in the Past Month (18-25 year olds)" presents a generally steady increase in Marijuana usage rates from about 0.0017% in 2002 to 0.0226% in 2018. On the other hand, Tobacco usage rates decreased considerably from about 0.0450% in 2002 to 0.0251% in 2018. In both 2002 and 2018, there is a greater rate in tobacco than marijuana usage, but decrease in tobacco usage was much greater than the increase in marijuana usage.
+Marijuana usage in Colorado after legalization (2013 - 2018):
 
-Considering the possibility of increased legalization of marijuana affecting the increase in marijuana usage, we isolated two states: Colorado, which was one of the first states to legalize recreational marijuana, in 2012, and North Carolina, which hasn't legalized recreational marijuana but legalized CBD with THC only in 2015. In graph "Tobacco and Marijuana Used in the Past Month in CO (18-25 year olds)," marijuana usage rates increase more than the national averages increased by, surpassing the usage rates of tobacco usage in about 2016. While the trend continues in 2012, when recreational marijuana was elgalized, there isn't a significant increase afterward compared to the increase from 2002-2012. In graph "Tobacco and Marijuana Used in the Past Month in NC (18-25 year olds)," the trends are more similar to the national average rates, where tobacco decreases at a higher rate than marijuana usage increases. But, the marijunaa usage rate in NC fluctuates much more (between around 0.015% and 0.02%) than the national average.
+$CO\_marijuana\_usage\_rate = 0.3101 + 0.0056 * year$
 
-Overall, we can see from 2002 to 2018, there is a general decrease in tobacco usage and increase in marijuana usage, especially in states where marijuana has been legalized.
+Marijuana usage in North Carolina 2013 - 2018:
 
-**Sources** [Forbes- Your Guide To Cannabis Legalization By State](https://www.forbes.com/health/body/cannabis-legalization-by-state/) [Tobacco-Free Kids- New Report: States Continue to Shortchange Tobacco Prevention Programs, But Several Show a Welcome Increase](https://www.tobaccofreekids.org/press-releases/2022_01_13_state-report-fy2022) [News-Bank- More teens using marijuana with electronic smoking devices - Parent alert! Your kid may be vaping more than tobacco](https://infoweb.newsbank.com/apps/news/document-view?p=WORLDNEWS&t=&sort=_rank_%3AD&fld-base-0=alltext&maxresults=20&val-base-0=are%20adolescents%20beginning%20to%20abuse%20marijuana%20more%20than%20tobacco%20&docref=news/16E335BBF826EC78)
+$NC\_marijuana\_usage\_rate = 0.1768 + 0.0045 * year$
+
+$year$ = number of years since marijuana legalization in Colorado (2013)
+
+p-value of interaction between explanatory variable (year) and category (state: NC/CO): 0.73
+
+Tobacco usage in Colorado after marijuana legalization (2013 - 2018):
+
+$CO\_tobacco\_usage\_rate = 0.3201 - 0.0237 * year$
+
+Tobacco usage in North Carolina 2013 - 2018:
+
+$NC\_tobacco\_usage\_rate = 0.3070 - 0.0193 * year$
+
+$year$ = number of years since marijuana legalization in Colorado (2013)
+
+p-value of interaction between explanatory variable (year) and category (state: NC/CO): 0.4
+
+For both of our hypothesis tests, the p-value of the interaction between our explanatory variable (the number of years since marijuana legalization in Colorado in 2013) and our category (the two states Colorado and North Carolina) was much higher than our chosen significance level of 0.05. Therefore, we failed to reject the null hypothesis that there is no difference in the rate of increase in marijuana usage and the rate of decrease in tobacco usage between North Carolina and Colorado. 
+
+\newpage
+
+**Discussion**
