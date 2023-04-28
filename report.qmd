@@ -1,6 +1,6 @@
 ---
-title: "How legalization of marijuana has affected marijuana and tobacco use in Colorado and North Carolina"
-subtitle: "Andy Chen, Laura Cai, Jaden Faunteroy, Luke Hardin"
+title: "How legalization of marijuana has affected marijuana & tobacco use"
+subtitle: "18-25 year olds in Colorado and North Carolina"
 format: html
 editor: visual
 execute:
