@@ -122,14 +122,16 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<div class="cell">
-
-</div>
+<p><strong>Abstract</strong></p>
+<p>Recently, many states have begun to legalize the recreational use of marijuana. We were interested in examining how the legalization of marijuana affected the usage of both marijuana and tobacco. To investigate, we used data collected from the National Survey on Drug Use and Health. We focused on the two states of Colorado (which legalized marijuana in 2013) and North Carolina (where marijuana remains illegal) and looked at differences in tobacco and marijuana usage between the two states in 18-25 year olds from 2013 - 2018. We performed hypothesis tests on the rate of increase in marijuana usage and the rate of decrease in tobacco usage to determine if a statistically significant difference existed among the rates between the two states. Our hypothesis was that since marijuana was legalized in Colorado, there would be a larger increase in marijuana usage and a larger decrease in tobacco usage in Colorado than in North Carolina. However, our hypothesis was wrong and we found no significant difference between the two, giving no evidence that legalizing marijuana impacts the usage rate of marijuana or tobacco.</p>
 <p><strong>Introduction and Data</strong></p>
 <p>How has the rate of marijuana and tobacco use changed from 2013 to 2018 in 18-25 year olds in North Carolina (where marijuana is illegal) and Colorado (where marijuana was legalized in 2013), and is there a significant difference between the change in marijuana and tobacco use in the two states? Given the recent increase in legalization of cannabis (Forbes) and the increase in tobacco prevention education (Tobacco Free Kids) in the past several decades, we were interested to see if marijuana usage has been increasing and tobacco usage has been decreasing among 18-25 year olds (which is our age range) from 2013 to 2018.</p>
 <p>Our dataset contains alcohol, cigarette, cocaine, marijuana, and tobacco use statistics for all 50 states and the District of Columbia from 2002 - 2018, broken down into three age ranges: 12-17, 18-25, and 26+. The data comes from CORGIS: The Collection of Really Great, Interesting, Situated Datasets, and was originally stored in the Substance Abuse &amp; Mental Health Data Archive (SAMHDA). The data was gathered from the annual National Survey on Drug Use and Health. There are 53&nbsp; variables, including state, year, and usage (totals and rates) of various drugs for each age group. The dataset includes 867 total observations.</p>
 <p>As mentioned earlier, we chose to focus on Colorado because marijuana was legalized there and North Carolina because that’s where we are. Therefore, we filtered the dataset for just those two states. In addition, since we are investigating marijuana and tobacco usage among 18-25 year olds we selected just marijuana usage rates and tobacco usage rates for 18-25 year olds among all the drug use data that was included. Finally, several variables were renamed and a new variable “years since legalization” was created to represent the number of years that had passed since marijuana legalization in Colorado in 2013.&nbsp;&nbsp;</p>
 <p>It is important to consider the ethical concerns and biases that may be present in the collection of this data. Since our data comes from a voluntary response sample, it may not be entirely accurate because people can choose to not respond or to respond inaccurately, especially when regarding a topic such as drug use that has legal implications.&nbsp;</p>
+<div class="cell">
+
+</div>
 <div class="cell">
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 867 Columns: 53
@@ -166,12 +168,12 @@ dbl (52): Year, Population.12-17, Population.18-25, Population.26+, Totals.A...
 <p><img src="report_files/figure-html/EDA-tobacco-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>To explore our research question, we conducted two hypothesis tests for a difference in the regression coefficients (the difference in the rate of change) of marijuana usage and tobacco usage in Colorado and North Carolina. To do this, we built two interaction models that examined the interaction effect that the state (CO or NO) and explanatory variable (years since legalization) had on the response variable (marijuana usage rate, tobacco usage rate. We then used the p-value of the interaction term given by the model in our hypothesis test.</p>
+<p>To explore our research question, we conducted two hypothesis tests for a difference in the regression coefficients (the difference in the rate of change) of marijuana usage and tobacco usage in Colorado and North Carolina. To do this, we built two interaction models that examined the interaction effect that the state (CO or NC) and explanatory variable (years since legalization) had on the response variables (marijuana usage rate and tobacco usage rate. We then used the p-value of the interaction term given by the model in our hypothesis test.</p>
 <p><strong>Hypothesis Test for Marijuana</strong></p>
 <p><span class="math inline">\(H_0:\beta_{Col\_mar} - \beta_{NC\_mar} = 0\)</span></p>
 <p><span class="math inline">\(H_a:\beta_{Col\_mar} - \beta_{NC\_mar} &gt; 0\)</span></p>
-<p>Null hypothesis: There is no difference in the rate of increase in marijuana usage in Colorado and North Carolina between 2013-2018</p>
-<p>Alternative Hypothesis: The increase in marijuana usage in Colorado is greater than the increase in marijuana usage in North Carolina from 2013-2018</p>
+<p>Null hypothesis: There is no difference in the rate of increase in marijuana usage in Colorado and North Carolina between 2013-2018.</p>
+<p>Alternative Hypothesis: The increase in marijuana usage in Colorado is greater than the increase in marijuana usage in North Carolina from 2013-2018.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 5
@@ -186,8 +188,8 @@ dbl (52): Year, Population.12-17, Population.18-25, Population.26+, Totals.A...
 <p><strong>Hypothesis Test for Tobacco:</strong></p>
 <p><span class="math inline">\(H_0:\beta_{Col\_tob} - \beta_{NC\_tob} = 0\)</span></p>
 <p><span class="math inline">\(H_a:\beta_{Col\_tob} - \beta_{NC\_tob} &lt; 0\)</span></p>
-<p>Null hypothesis: There is no difference in the rate of decrease in tobacco usage in Colorado and North Carolina from 2013-2018</p>
-<p>Alternative Hypothesis: The decrease in tobacco usage in Colorado is greater than the decrease in tobacco usage in North Carolina from 2013-2018</p>
+<p>Null hypothesis: There is no difference in the rate of decrease in tobacco usage in Colorado and North Carolina from 2013-2018.</p>
+<p>Alternative Hypothesis: The decrease in tobacco usage in Colorado is greater than the decrease in tobacco usage in North Carolina from 2013-2018.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 5
@@ -224,7 +226,10 @@ dbl (52): Year, Population.12-17, Population.18-25, Population.26+, Totals.A...
 <p><span class="math inline">\(year\)</span> = number of years since marijuana legalization in Colorado (2013)</p>
 <p>p-value of interaction between explanatory variable (year) and category (state: NC/CO): 0.4</p>
 <p>For both of our hypothesis tests, the p-value of the interaction between our explanatory variable (the number of years since marijuana legalization in Colorado in 2013) and our category (the two states Colorado and North Carolina) was much higher than our chosen significance level of 0.05. Therefore, we failed to reject the null hypothesis that there is no difference in the rate of increase in marijuana usage and the rate of decrease in tobacco usage between North Carolina and Colorado.&nbsp;</p>
+<p><strong>Predictions</strong></p>
+<p>Using our interaction models that looked at the relationship between state and years since legalization with marijuana and tobacco usage rates, we made predictions for these rates for 2022. If the trends we observed from 2013-2018 continued to present day, we found that marijuana usage rates in NC and CO in 2022 would be 21.7% and 36.1%, respectively and that tobacco usage rates in NC and CO would be 13.3% and 10.7%, respectively. Although we are cautious to extrapolate beyond the scope of the data, it would be interesting to see how the current usage rates compare.</p>
 <p><strong>Discussion</strong></p>
+<p>Overall, through our analysis of drug use in the CO and NC, we found that there was no difference in marijuana and tobacco usage rates in the state where marijuana was legalized (CO) and where marijuana was not legalized (NC). However, some of the limitations present in our analysis were that we only looked at two states and only six years worth of data, and the data could be biased from voluntary response. In the future, we hope to look more into different states of differing legalization statuses as well as more datasets, which would be able to provide more years to analyze, maybe looking at the effect of the COVID-19 pandemic.</p>
 
 
 
